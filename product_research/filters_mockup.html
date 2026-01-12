@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplaces Filters</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            200: '#ddd6fe',
+                            300: '#c4b5fd',
+                            400: '#a78bfa',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+
+        /* Custom scrollbar for dropdowns */
+        .dropdown-scroll::-webkit-scrollbar { width: 6px; }
+        .dropdown-scroll::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 3px; }
+        .dropdown-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        .dropdown-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Smooth transitions */
+        .filter-section { transition: all 0.2s ease-out; }
+
+        /* Input focus states */
+        input:focus { box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15); }
+
+        /* Tag button states */
+        .tag-btn {
+            transition: all 0.15s ease;
+        }
+        .tag-btn.active {
+            background-color: #7c3aed;
+            color: white;
+            font-weight: 500;
+        }
+        .tag-btn:not(.active):hover {
+            background-color: #f1f5f9;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen">
+
+    <!-- Header simulation -->
+    <div class="bg-white border-b border-slate-200 px-6 py-3">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 bg-brand-600 rounded-lg"></div>
+            <span class="font-semibold text-slate-800">FatGrid</span>
+            <span class="text-slate-300 mx-2">→</span>
+            <span class="text-slate-600">Marketplaces</span>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="p-6">
+
+        <!-- Filters Card -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 mb-6">
+
+            <!-- Top bar: Type tabs + Results count -->
+            <div class="flex items-center justify-between px-5 py-3 border-b border-slate-100">
+                <div class="flex items-center gap-4">
+                    <!-- Type Tabs -->
+                    <div class="flex bg-slate-100 rounded-lg p-1">
+                        <button class="px-4 py-1.5 text-sm font-medium bg-white rounded-md shadow-sm text-slate-800">All</button>
+                        <button class="px-4 py-1.5 text-sm font-medium text-slate-500 hover:text-slate-700 transition-colors">Guest Post</button>
+                        <button class="px-4 py-1.5 text-sm font-medium text-slate-500 hover:text-slate-700 transition-colors">Link Insertion</button>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span class="text-sm text-slate-500"><span class="font-semibold text-slate-700">12,847</span> publishers found</span>
+                    <button class="text-sm text-red-500 hover:text-red-600 font-medium transition-colors">Clear all</button>
+                </div>
+            </div>
+
+            <!-- Primary Filters -->
+            <div class="p-5">
+
+                <!-- Row 1: Metric Filters -->
+                <div class="grid grid-cols-5 gap-4 mb-4">
+
+                    <!-- Price -->
+                    <div>
+                        <label class="block text-xs font-medium text-slate-500 mb-1.5">Price ($)</label>
+                        <div class="flex gap-2">
+                            <input type="text" placeholder="Min" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-brand-500 placeholder-slate-400">
+                            <input type="text" placeholder="Max" value="500" class="w-full px-3 py-2 text-sm border border-brand-300 bg-brand-50 rounded-lg focus:outline-none focus:border-brand-500 text-brand-700">
+                        </div>
+                    </div>
+
+                    <!-- Organic Traffic -->
+                    <div>
+                        <label class="block text-xs font-medium text-slate-500 mb-1.5">Organic Traffic</label>
+                        <div class="flex gap-2">
+                            <input type="text" placeholder="Min" value="1,000" class="w-full px-3 py-2 text-sm border border-brand-300 bg-brand-50 rounded-lg focus:outline-none focus:border-brand-500 text-brand-700">
+                            <input type="text" placeholder="Max" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-brand-500 placeholder-slate-400">
+                        </div>
+                    </div>
+
+                    <!-- DR -->
+                    <div>
+                        <label class="block text-xs font-medium text-slate-500 mb-1.5">DR</label>
+                        <div class="flex gap-2">
+                            <input type="text" placeholder="0" value="30" class="w-full px-3 py-2 text-sm border border-brand-300 bg-brand-50 rounded-lg focus:outline-none focus:border-brand-500 text-brand-700">
+                            <input type="text" placeholder="100" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-brand-500 placeholder-slate-400">
+                        </div>
+                    </div>
+
+                    <!-- AS -->
+                    <div>
+                        <label class="block text-xs font-medium text-slate-500 mb-1.5">AS</label>
+                        <div class="flex gap-2">
+                            <input type="text" placeholder="0" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-brand-500 placeholder-slate-400">
+                            <input type="text" placeholder="100" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-brand-500 placeholder-slate-400">
+                        </div>
+                    </div>
+
+                    <!-- Keyword Match -->
+                    <div>
+                        <label class="block text-xs font-medium text-slate-500 mb-1.5">Keyword Match</label>
+                        <div class="relative">
+                            <input type="text" placeholder="e.g. finance, crypto" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-brand-500 placeholder-slate-400">
+                            <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 2: Dropdowns + Tags -->
+                <div class="grid grid-cols-6 gap-4 items-end">
+
+                    <!-- Category (Multi-select) -->
+                    <div class="relative">
+                        <label class="block text-xs font-medium text-slate-500 mb-1.5">Category</label>
+                        <button onclick="toggleDropdown('category-dropdown')" class="w-full flex items-center justify-between px-3 py-2 text-sm bg-brand-50 border border-brand-300 rounded-lg text-brand-700 hover:bg-brand-100 transition-colors">
+                            <span class="truncate">Finance, Tech <span class="text-brand-500">+1</span></span>
+                            <svg class="w-4 h-4 flex-shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <!-- Dropdown -->
+                        <div id="category-dropdown" class="hidden absolute z-20 mt-1 w-64 bg-white border border-slate-200 rounded-lg shadow-lg">
+                            <div class="p-2 border-b border-slate-100">
+                                <input type="text" placeholder="Search categories..." class="w-full px-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:border-brand-500">
+                            </div>
+                            <div class="p-2 max-h-48 overflow-y-auto dropdown-scroll">
+                                <label class="flex items-center gap-2 px-2 py-1.5 hover:bg-slate-50 rounded cursor-pointer">
+                                    <input type="checkbox" checked class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
+                                    <span class="text-sm text-slate-700">Finance</span>
+                                </label>
+                                <label class="flex items-center gap-2 px-2 py-1.5 hover:bg-slate-50 rounded cursor-pointer">
+                                    <input type="checkbox" checked class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
+                                    <span class="text-sm text-slate-700">Technology</span>
+                                </label>
+                                <label class="flex items-center gap-2 px-2 py-1.5 hover:bg-slate-50 rounded cursor-pointer">
+                                    <input type="checkbox" checked class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
+                                    <span class="text-sm text-slate-700">Business</span>
+                                </label>
+                                <label class="flex items-center gap-2 px-2 py-1.5 hover:bg-slate-50 rounded cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
+                                    <span class="text-sm text-slate-700">Health</span>
+                                </label>
+                                <label class="flex items-center gap-2 px-2 py-1.5 hover:bg-slate-50 rounded cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
+                                    <span class="text-sm text-slate-700">Lifestyle</span>
+                                </label>
+                                <label class="flex items-center gap-2 px-2 py-1.5 hover:bg-slate-50 rounded cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
+                                    <span class="text-sm text-slate-700">Marketing</span>
+                                </label>
+                                <label class="flex items-center gap-2 px-2 py-1.5 hover:bg-slate-50 rounded cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
+                                    <span class="text-sm text-slate-700">News</span>
+                                </label>
+                            </div>
+                            <div class="p-2 border-t border-slate-100 flex justify-end gap-2">
+                                <button class="px-3 py-1.5 text-xs text-slate-500 hover:text-slate-700">Clear</button>
+                                <button class="px-3 py-1.5 text-xs bg-brand-600 text-white rounded-md hover:bg-brand-700">Apply</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Languages (Multi-select) -->
+                    <div class="relative">
+                        <label class="block text-xs font-medium text-slate-500 mb-1.5">Languages</label>
+                        <button onclick="toggleDropdown('languages-dropdown')" class="w-full flex items-center justify-between px-3 py-2 text-sm border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors">
+                            <span>Any</span>
+                            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <!-- Dropdown -->
+                        <div id="languages-dropdown" class="hidden absolute z-20 mt-1 w-56 bg-white border border-slate-200 rounded-lg shadow-lg">
+                            <div class="p-2 border-b border-slate-100">
+                                <input type="text" placeholder="Search languages..." class="w-full px-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:border-brand-500">
+                            </div>
+                            <div class="p-2 max-h-48 overflow-y-auto dropdown-scroll">
+                                <label class="flex items-center gap-2 px-2 py-1.5 hover:bg-slate-50 rounded cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
+                                    <span class="text-sm text-slate-700">English</span>
+                                </label>
+                                <label class="flex items-center gap-2 px-2 py-1.5 hover:bg-slate-50 rounded cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
+                                    <span class="text-sm text-slate-700">Spanish</span>
+                                </label>
+                                <label class="flex items-center gap-2 px-2 py-1.5 hover:bg-slate-50 rounded cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
+                                    <span class="text-sm text-slate-700">German</span>
+                                </label>
+                                <label class="flex items-center gap-2 px-2 py-1.5 hover:bg-slate-50 rounded cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
+                                    <span class="text-sm text-slate-700">French</span>
+                                </label>
+                                <label class="flex items-center gap-2 px-2 py-1.5 hover:bg-slate-50 rounded cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
+                                    <span class="text-sm text-slate-700">Portuguese</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Top Country (Multi-select) -->
+                    <div class="relative">
+                        <label class="block text-xs font-medium text-slate-500 mb-1.5">Top Country</label>
+                        <button onclick="toggleDropdown('country-dropdown')" class="w-full flex items-center justify-between px-3 py-2 text-sm border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors">
+                            <span>Any</span>
+                            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div id="country-dropdown" class="hidden absolute z-20 mt-1 w-56 bg-white border border-slate-200 rounded-lg shadow-lg">
+                            <div class="p-2 border-b border-slate-100">
+                                <input type="text" placeholder="Search countries..." class="w-full px-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:border-brand-500">
+                            </div>
+                            <div class="p-2 max-h-48 overflow-y-auto dropdown-scroll">
+                                <label class="flex items-center gap-2 px-2 py-1.5 hover:bg-slate-50 rounded cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 text-brand-600 rounded border-slate-300">
+                                    <span class="text-sm text-slate-700">United States</span>
+                                </label>
+                                <label class="flex items-center gap-2 px-2 py-1.5 hover:bg-slate-50 rounded cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 text-brand-600 rounded border-slate-300">
+                                    <span class="text-sm text-slate-700">United Kingdom</span>
+                                </label>
+                                <label class="flex items-center gap-2 px-2 py-1.5 hover:bg-slate-50 rounded cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 text-brand-600 rounded border-slate-300">
+                                    <span class="text-sm text-slate-700">Germany</span>
+                                </label>
+                                <label class="flex items-center gap-2 px-2 py-1.5 hover:bg-slate-50 rounded cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 text-brand-600 rounded border-slate-300">
+                                    <span class="text-sm text-slate-700">France</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Restricted Niches (Multi-select) -->
+                    <div class="relative">
+                        <label class="block text-xs font-medium text-slate-500 mb-1.5">Restricted Niches</label>
+                        <button onclick="toggleDropdown('niches-dropdown')" class="w-full flex items-center justify-between px-3 py-2 text-sm border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors">
+                            <span>Any</span>
+                            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div id="niches-dropdown" class="hidden absolute z-20 mt-1 w-48 bg-white border border-slate-200 rounded-lg shadow-lg">
+                            <div class="p-2 max-h-48 overflow-y-auto dropdown-scroll">
+                                <label class="flex items-center gap-2 px-2 py-1.5 hover:bg-slate-50 rounded cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 text-brand-600 rounded border-slate-300">
+                                    <span class="text-sm text-slate-700">Casino</span>
+                                </label>
+                                <label class="flex items-center gap-2 px-2 py-1.5 hover:bg-slate-50 rounded cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 text-brand-600 rounded border-slate-300">
+                                    <span class="text-sm text-slate-700">CBD</span>
+                                </label>
+                                <label class="flex items-center gap-2 px-2 py-1.5 hover:bg-slate-50 rounded cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 text-brand-600 rounded border-slate-300">
+                                    <span class="text-sm text-slate-700">Crypto</span>
+                                </label>
+                                <label class="flex items-center gap-2 px-2 py-1.5 hover:bg-slate-50 rounded cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 text-brand-600 rounded border-slate-300">
+                                    <span class="text-sm text-slate-700">Adult</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Link Follow (Tags) -->
+                    <div>
+                        <label class="block text-xs font-medium text-slate-500 mb-1.5">Link Follow</label>
+                        <div class="flex rounded-lg border border-slate-200 overflow-hidden">
+                            <button onclick="setTag(this)" class="tag-btn flex-1 px-2 py-2 text-xs active">dofollow</button>
+                            <button onclick="setTag(this)" class="tag-btn flex-1 px-2 py-2 text-xs border-l border-slate-200 text-slate-500">nofollow</button>
+                            <button onclick="setTag(this)" class="tag-btn flex-1 px-2 py-2 text-xs border-l border-slate-200 text-slate-500">any</button>
+                        </div>
+                    </div>
+
+                    <!-- More Filters Button -->
+                    <div>
+                        <label class="block text-xs font-medium text-transparent mb-1.5">.</label>
+                        <button onclick="toggleMoreFilters()" id="more-filters-btn" class="w-full flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium text-slate-600 border border-slate-200 rounded-lg hover:bg-slate-50 hover:border-slate-300 transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+                            <span>More filters</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- More Filters Section (Expandable) -->
+            <div id="more-filters-section" class="hidden border-t border-slate-100">
+                <div class="p-5">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-sm font-semibold text-slate-700">Additional Filters</h3>
+                        <button onclick="toggleMoreFilters()" class="text-sm text-slate-400 hover:text-slate-600">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-4 gap-6">
+
+                        <!-- Traffic Metrics -->
+                        <div class="bg-blue-50 rounded-lg p-4 border border-blue-100">
+                            <h4 class="text-xs font-semibold text-blue-700 uppercase tracking-wide mb-3">Traffic Metrics</h4>
+
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="block text-xs text-slate-600 mb-1">Min Monthly Organic</label>
+                                    <div class="flex gap-2">
+                                        <input type="text" placeholder="Min" class="w-full px-2 py-1.5 text-sm border border-slate-200 rounded focus:outline-none focus:border-brand-500 bg-white">
+                                        <input type="text" placeholder="Max" class="w-full px-2 py-1.5 text-sm border border-slate-200 rounded focus:outline-none focus:border-brand-500 bg-white">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-600 mb-1">Organic Traffic (Top Country)</label>
+                                    <div class="flex gap-2">
+                                        <input type="text" placeholder="Min" class="w-full px-2 py-1.5 text-sm border border-slate-200 rounded focus:outline-none focus:border-brand-500 bg-white">
+                                        <input type="text" placeholder="Max" class="w-full px-2 py-1.5 text-sm border border-slate-200 rounded focus:outline-none focus:border-brand-500 bg-white">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-600 mb-1">All Channels (Total)</label>
+                                    <div class="flex gap-2">
+                                        <input type="text" placeholder="Min" class="w-full px-2 py-1.5 text-sm border border-slate-200 rounded focus:outline-none focus:border-brand-500 bg-white">
+                                        <input type="text" placeholder="Max" class="w-full px-2 py-1.5 text-sm border border-slate-200 rounded focus:outline-none focus:border-brand-500 bg-white">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-600 mb-1">All Channels (Top Country)</label>
+                                    <div class="flex gap-2">
+                                        <input type="text" placeholder="Min" class="w-full px-2 py-1.5 text-sm border border-slate-200 rounded focus:outline-none focus:border-brand-500 bg-white">
+                                        <input type="text" placeholder="Max" class="w-full px-2 py-1.5 text-sm border border-slate-200 rounded focus:outline-none focus:border-brand-500 bg-white">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Link Attributes -->
+                        <div class="bg-violet-50 rounded-lg p-4 border border-violet-100">
+                            <h4 class="text-xs font-semibold text-violet-700 uppercase tracking-wide mb-3">Link Attributes</h4>
+
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="block text-xs text-slate-600 mb-1">Sponsored</label>
+                                    <div class="flex rounded border border-slate-200 overflow-hidden bg-white">
+                                        <button onclick="setTag(this)" class="tag-btn flex-1 px-2 py-1.5 text-xs text-slate-500">yes</button>
+                                        <button onclick="setTag(this)" class="tag-btn flex-1 px-2 py-1.5 text-xs border-l border-slate-200 text-slate-500">no</button>
+                                        <button onclick="setTag(this)" class="tag-btn flex-1 px-2 py-1.5 text-xs border-l border-slate-200 active">any</button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-600 mb-1">Ref Domains</label>
+                                    <div class="flex gap-2">
+                                        <input type="text" placeholder="Min" class="w-full px-2 py-1.5 text-sm border border-slate-200 rounded focus:outline-none focus:border-brand-500 bg-white">
+                                        <input type="text" placeholder="Max" class="w-full px-2 py-1.5 text-sm border border-slate-200 rounded focus:outline-none focus:border-brand-500 bg-white">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Marketplace -->
+                        <div class="bg-amber-50 rounded-lg p-4 border border-amber-100">
+                            <h4 class="text-xs font-semibold text-amber-700 uppercase tracking-wide mb-3">Marketplace</h4>
+
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="block text-xs text-slate-600 mb-1">Sellers</label>
+                                    <button class="w-full flex items-center justify-between px-2 py-1.5 text-sm border border-slate-200 rounded text-slate-600 hover:bg-white bg-white">
+                                        <span>Any seller</span>
+                                        <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                                    </button>
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-600 mb-1">Creation Date</label>
+                                    <div class="flex gap-2">
+                                        <input type="date" class="w-full px-2 py-1.5 text-sm border border-slate-200 rounded focus:outline-none focus:border-brand-500 bg-white">
+                                        <input type="date" class="w-full px-2 py-1.5 text-sm border border-slate-200 rounded focus:outline-none focus:border-brand-500 bg-white">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-600 mb-1">Verified</label>
+                                    <div class="flex rounded border border-slate-200 overflow-hidden bg-white">
+                                        <button onclick="setTag(this)" class="tag-btn flex-1 px-2 py-1.5 text-xs text-slate-500">yes</button>
+                                        <button onclick="setTag(this)" class="tag-btn flex-1 px-2 py-1.5 text-xs border-l border-slate-200 text-slate-500">no</button>
+                                        <button onclick="setTag(this)" class="tag-btn flex-1 px-2 py-1.5 text-xs border-l border-slate-200 active">any</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- My Data -->
+                        <div class="bg-emerald-50 rounded-lg p-4 border border-emerald-100">
+                            <h4 class="text-xs font-semibold text-emerald-700 uppercase tracking-wide mb-3">My Data</h4>
+
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="block text-xs text-slate-600 mb-1">Favorites</label>
+                                    <div class="flex rounded border border-slate-200 overflow-hidden bg-white">
+                                        <button onclick="setTag(this)" class="tag-btn flex-1 px-2 py-1.5 text-xs text-slate-500">yes</button>
+                                        <button onclick="setTag(this)" class="tag-btn flex-1 px-2 py-1.5 text-xs border-l border-slate-200 text-slate-500">no</button>
+                                        <button onclick="setTag(this)" class="tag-btn flex-1 px-2 py-1.5 text-xs border-l border-slate-200 active">any</button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-600 mb-1">Blacklist</label>
+                                    <div class="flex rounded border border-slate-200 overflow-hidden bg-white">
+                                        <button onclick="setTag(this)" class="tag-btn flex-1 px-2 py-1.5 text-xs text-slate-500">show</button>
+                                        <button onclick="setTag(this)" class="tag-btn flex-1 px-2 py-1.5 text-xs border-l border-slate-200 active">hide</button>
+                                        <button onclick="setTag(this)" class="tag-btn flex-1 px-2 py-1.5 text-xs border-l border-slate-200 text-slate-500">only</button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-600 mb-1">Tags</label>
+                                    <button class="w-full flex items-center justify-between px-2 py-1.5 text-sm border border-slate-200 rounded text-slate-600 hover:bg-white bg-white">
+                                        <span>Any tags</span>
+                                        <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                                    </button>
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-600 mb-1">Notes</label>
+                                    <div class="flex rounded border border-slate-200 overflow-hidden bg-white">
+                                        <button onclick="setTag(this)" class="tag-btn flex-1 px-2 py-1.5 text-xs text-slate-500">has notes</button>
+                                        <button onclick="setTag(this)" class="tag-btn flex-1 px-2 py-1.5 text-xs border-l border-slate-200 active">any</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Advanced Section -->
+                    <div class="mt-4 pt-4 border-t border-slate-200">
+                        <div class="flex items-center gap-4">
+                            <span class="text-xs font-medium text-slate-500">Advanced:</span>
+                            <div class="flex items-center gap-2">
+                                <label class="block text-xs text-slate-600">Country Traffic Present</label>
+                                <div class="flex rounded border border-slate-200 overflow-hidden bg-white">
+                                    <button onclick="setTag(this)" class="tag-btn px-3 py-1 text-xs text-slate-500">yes</button>
+                                    <button onclick="setTag(this)" class="tag-btn px-3 py-1 text-xs border-l border-slate-200 text-slate-500">no</button>
+                                    <button onclick="setTag(this)" class="tag-btn px-3 py-1 text-xs border-l border-slate-200 active">any</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table placeholder -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-4">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" class="w-4 h-4 text-brand-600 rounded border-slate-300">
+                        <span class="text-sm text-slate-600">Select all</span>
+                    </label>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="text-sm text-slate-500">Sort by:</span>
+                    <button class="flex items-center gap-1 text-sm font-medium text-slate-700 hover:text-brand-600">
+                        Organic Traffic
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Sample table rows -->
+            <div class="border border-slate-200 rounded-lg overflow-hidden">
+                <table class="w-full">
+                    <thead class="bg-slate-50 border-b border-slate-200">
+                        <tr>
+                            <th class="w-10 px-4 py-3"><input type="checkbox" class="w-4 h-4 text-brand-600 rounded border-slate-300"></th>
+                            <th class="text-left px-4 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wide">Publisher</th>
+                            <th class="text-left px-4 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wide">Price</th>
+                            <th class="text-left px-4 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wide">DR</th>
+                            <th class="text-left px-4 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wide">Traffic</th>
+                            <th class="text-left px-4 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wide">Category</th>
+                            <th class="text-left px-4 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wide">Offers</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        <tr class="hover:bg-slate-50">
+                            <td class="px-4 py-3"><input type="checkbox" class="w-4 h-4 text-brand-600 rounded border-slate-300"></td>
+                            <td class="px-4 py-3"><span class="text-sm font-medium text-brand-600">techcrunch.com</span></td>
+                            <td class="px-4 py-3"><span class="text-sm text-slate-700">$450</span></td>
+                            <td class="px-4 py-3"><span class="text-sm text-slate-700">91</span></td>
+                            <td class="px-4 py-3"><span class="text-sm text-slate-700">24.5M</span></td>
+                            <td class="px-4 py-3"><span class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded">Technology</span></td>
+                            <td class="px-4 py-3"><button class="text-sm text-brand-600 hover:text-brand-700 font-medium">4 offers</button></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="px-4 py-3"><input type="checkbox" class="w-4 h-4 text-brand-600 rounded border-slate-300"></td>
+                            <td class="px-4 py-3"><span class="text-sm font-medium text-brand-600">forbes.com</span></td>
+                            <td class="px-4 py-3"><span class="text-sm text-slate-700">$380</span></td>
+                            <td class="px-4 py-3"><span class="text-sm text-slate-700">95</span></td>
+                            <td class="px-4 py-3"><span class="text-sm text-slate-700">89.2M</span></td>
+                            <td class="px-4 py-3"><span class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded">Finance</span></td>
+                            <td class="px-4 py-3"><button class="text-sm text-brand-600 hover:text-brand-700 font-medium">6 offers</button></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="px-4 py-3"><input type="checkbox" class="w-4 h-4 text-brand-600 rounded border-slate-300"></td>
+                            <td class="px-4 py-3"><span class="text-sm font-medium text-brand-600">entrepreneur.com</span></td>
+                            <td class="px-4 py-3"><span class="text-sm text-slate-700">$290</span></td>
+                            <td class="px-4 py-3"><span class="text-sm text-slate-700">82</span></td>
+                            <td class="px-4 py-3"><span class="text-sm text-slate-700">8.1M</span></td>
+                            <td class="px-4 py-3"><span class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded">Business</span></td>
+                            <td class="px-4 py-3"><button class="text-sm text-brand-600 hover:text-brand-700 font-medium">3 offers</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Toggle dropdown visibility
+        function toggleDropdown(id) {
+            const dropdown = document.getElementById(id);
+            const allDropdowns = document.querySelectorAll('[id$="-dropdown"]');
+
+            allDropdowns.forEach(d => {
+                if (d.id !== id) d.classList.add('hidden');
+            });
+
+            dropdown.classList.toggle('hidden');
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('[id$="-dropdown"]') && !e.target.closest('button')) {
+                document.querySelectorAll('[id$="-dropdown"]').forEach(d => d.classList.add('hidden'));
+            }
+        });
+
+        // Toggle More Filters section
+        function toggleMoreFilters() {
+            const section = document.getElementById('more-filters-section');
+            const btn = document.getElementById('more-filters-btn');
+
+            section.classList.toggle('hidden');
+
+            if (!section.classList.contains('hidden')) {
+                btn.innerHTML = `
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/></svg>
+                    <span>Less filters</span>
+                `;
+            } else {
+                btn.innerHTML = `
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+                    <span>More filters</span>
+                `;
+            }
+        }
+
+        // Set active tag in a tag group
+        function setTag(button) {
+            const parent = button.parentElement;
+            parent.querySelectorAll('.tag-btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.add('text-slate-500');
+            });
+            button.classList.add('active');
+            button.classList.remove('text-slate-500');
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+# Environment and secrets
+.env
+.env.*
+
+# Database files
+*.duckdb
+*.duckdb.wal
+
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Claude Code
+.claude/
+
+# Logs
+*.log
+
+# Data exports (large files)
+*.csv
+*.json
+!package.json
+!tsconfig.json
+
+# Qdrant data
+qdrant_data/storage/
+
+# Fathom transcripts (synced, not versioned)
+fathom_data/transcripts/
+fathom_data/*.json

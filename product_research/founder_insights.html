@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FatGrid: Founder Analysis & Strategic Insights</title>
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --surface: #141414;
+            --surface-2: #1a1a1a;
+            --border: #2a2a2a;
+            --text: #e5e5e5;
+            --text-muted: #888;
+            --accent: #3b82f6;
+            --accent-dim: #1e3a5f;
+            --red: #ef4444;
+            --red-dim: #450a0a;
+            --green: #22c55e;
+            --green-dim: #052e16;
+            --yellow: #eab308;
+            --yellow-dim: #422006;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .date {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        section {
+            margin-bottom: 3rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 1.5rem 0 1rem;
+            color: var(--text);
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+
+        .highlight {
+            color: var(--text);
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .metric-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+        }
+
+        .metric-card.red {
+            border-color: var(--red);
+            background: var(--red-dim);
+        }
+
+        .metric-card.green {
+            border-color: var(--green);
+            background: var(--green-dim);
+        }
+
+        .metric-card.yellow {
+            border-color: var(--yellow);
+            background: var(--yellow-dim);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        .metric-card.red .metric-value { color: var(--red); }
+        .metric-card.green .metric-value { color: var(--green); }
+        .metric-card.yellow .metric-value { color: var(--yellow); }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            color: var(--text);
+        }
+
+        tr:hover {
+            background: var(--surface);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .badge-red { background: var(--red-dim); color: var(--red); }
+        .badge-green { background: var(--green-dim); color: var(--green); }
+        .badge-yellow { background: var(--yellow-dim); color: var(--yellow); }
+        .badge-blue { background: var(--accent-dim); color: var(--accent); }
+
+        .insight-box {
+            background: var(--surface);
+            border-left: 3px solid var(--accent);
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .insight-box.warning {
+            border-left-color: var(--red);
+        }
+
+        .insight-box.success {
+            border-left-color: var(--green);
+        }
+
+        .insight-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.5rem;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 2px solid var(--bg);
+        }
+
+        .timeline-date {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-container {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .bar-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .bar-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .bar-label {
+            width: 80px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .bar-track {
+            flex: 1;
+            height: 24px;
+            background: var(--surface-2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            padding-left: 0.5rem;
+            font-size: 0.75rem;
+            color: white;
+            font-weight: 500;
+        }
+
+        .bar-fill.red { background: var(--red); }
+        .bar-fill.green { background: var(--green); }
+
+        .bar-value {
+            width: 60px;
+            text-align: right;
+            font-size: 0.85rem;
+        }
+
+        .recommendation {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .recommendation-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .recommendation-number {
+            width: 32px;
+            height: 32px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .recommendation-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .quote {
+            font-style: italic;
+            color: var(--text-muted);
+            border-left: 2px solid var(--border);
+            padding-left: 1rem;
+            margin: 1rem 0;
+        }
+
+        .assumption-tag {
+            background: var(--yellow-dim);
+            color: var(--yellow);
+            padding: 0.125rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            margin-left: 0.5rem;
+        }
+
+        footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>FatGrid Strategic Analysis</h1>
+            <p class="subtitle">Founder insights from data-driven business review</p>
+            <p class="date">January 11, 2026</p>
+        </header>
+
+        <!-- Executive Summary -->
+        <section>
+            <h2>Executive Summary</h2>
+
+            <div class="metric-grid">
+                <div class="metric-card">
+                    <div class="metric-value">$2,374</div>
+                    <div class="metric-label">Monthly Recurring Revenue</div>
+                </div>
+                <div class="metric-card red">
+                    <div class="metric-value">17%</div>
+                    <div class="metric-label">Monthly Churn Rate</div>
+                </div>
+                <div class="metric-card yellow">
+                    <div class="metric-value">46</div>
+                    <div class="metric-label">Paying Customers</div>
+                </div>
+                <div class="metric-card green">
+                    <div class="metric-value">$0</div>
+                    <div class="metric-label">Customer Acquisition Cost</div>
+                </div>
+            </div>
+
+            <div class="insight-box warning">
+                <div class="insight-title">Core Finding</div>
+                <p style="margin:0">FatGrid has a <span class="highlight">retention problem, not a conversion problem</span>. With 17% monthly churn, the business is on a treadmill&mdash;new subscribers replace churned ones, resulting in zero net growth since November 2025.</p>
+            </div>
+        </section>
+
+        <!-- The Product -->
+        <section>
+            <h2>The Product</h2>
+            <p><span class="highlight">FatGrid</span> is a B2B SaaS tool for link-building professionals. It aggregates pricing data from ~20 major link-building marketplaces, enabling users to find the best prices for guest posts and link insertions.</p>
+
+            <p>Think of it as <span class="highlight">"Kayak for backlink purchases"</span>&mdash;price comparison across a fragmented marketplace ecosystem.</p>
+
+            <h3>Key Stats</h3>
+            <table>
+                <tr>
+                    <td>Publishers in database</td>
+                    <td><strong>329,384</strong></td>
+                </tr>
+                <tr>
+                    <td>Marketplaces aggregated</td>
+                    <td><strong>~20</strong></td>
+                </tr>
+                <tr>
+                    <td>Total accounts</td>
+                    <td><strong>1,750</strong></td>
+                </tr>
+                <tr>
+                    <td>Weekly active users</td>
+                    <td><strong>~170</strong></td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- The Business -->
+        <section>
+            <h2>Business Context</h2>
+
+            <div class="two-column">
+                <div>
+                    <h3>Revenue Streams</h3>
+                    <table>
+                        <tr>
+                            <td>SaaS Subscriptions</td>
+                            <td><strong>$2,374/mo</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Direct Link Sales</td>
+                            <td><strong>~$1,000/mo</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Agency Work</td>
+                            <td><strong>Primary income</strong></td>
+                        </tr>
+                    </table>
+                </div>
+                <div>
+                    <h3>Team & Model</h3>
+                    <table>
+                        <tr>
+                            <td>Founder</td>
+                            <td>Full-time</td>
+                        </tr>
+                        <tr>
+                            <td>Employees</td>
+                            <td>2 (1 dev, 1 ops)</td>
+                        </tr>
+                        <tr>
+                            <td>Funding</td>
+                            <td>Bootstrapped</td>
+                        </tr>
+                        <tr>
+                            <td>Primary channel</td>
+                            <td>LinkedIn</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="insight-box">
+                <div class="insight-title">Unique Advantage</div>
+                <p style="margin:0">The founder runs an agency that sells backlinks, making him a power user of his own product. This creates deep domain expertise but also creates a conflict: marketplaces see him as both partner (sends traffic) and competitor (sells links directly).</p>
+            </div>
+        </section>
+
+        <!-- Churn Analysis -->
+        <section>
+            <h2>The Churn Problem</h2>
+
+            <p>Healthy B2B SaaS targets 3-5% monthly churn. FatGrid is experiencing <span class="highlight">15-23% monthly churn</span>&mdash;losing roughly 1 in 5 paying customers every month.</p>
+
+            <div class="chart-container">
+                <h3 style="margin-top:0">Monthly Churn Rate</h3>
+                <div class="bar-chart">
+                    <div class="bar-row">
+                        <span class="bar-label">Jul 2025</span>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="width: 54%"></div>
+                        </div>
+                        <span class="bar-value">13.6%</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-label">Aug 2025</span>
+                        <div class="bar-track">
+                            <div class="bar-fill red" style="width: 83%"></div>
+                        </div>
+                        <span class="bar-value">20.7%</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-label">Sep 2025</span>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="width: 54%"></div>
+                        </div>
+                        <span class="bar-value">13.5%</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-label">Oct 2025</span>
+                        <div class="bar-track">
+                            <div class="bar-fill red" style="width: 84%"></div>
+                        </div>
+                        <span class="bar-value">20.9%</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-label">Nov 2025</span>
+                        <div class="bar-track">
+                            <div class="bar-fill red" style="width: 94%"></div>
+                        </div>
+                        <span class="bar-value">23.4%</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-label">Dec 2025</span>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="width: 58%"></div>
+                        </div>
+                        <span class="bar-value">14.6%</span>
+                    </div>
+                </div>
+                <p style="font-size: 0.8rem; margin-top: 1rem; margin-bottom: 0">Benchmark: Good B2B SaaS = 3-5% monthly churn</p>
+            </div>
+
+            <h3>When Users Leave</h3>
+            <p><span class="highlight">83% of Standard tier churn happens in the first 60 days.</span> Users try the product, hit a problem quickly, and leave.</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Lifetime</th>
+                        <th>Standard ($29)</th>
+                        <th>Business ($159)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>0-30 days</td>
+                        <td><span class="badge badge-red">37%</span></td>
+                        <td>33%</td>
+                    </tr>
+                    <tr>
+                        <td>31-60 days</td>
+                        <td><span class="badge badge-red">46%</span></td>
+                        <td>11%</td>
+                    </tr>
+                    <tr>
+                        <td>61-90 days</td>
+                        <td>7%</td>
+                        <td>33%</td>
+                    </tr>
+                    <tr>
+                        <td>91+ days</td>
+                        <td>10%</td>
+                        <td>22%</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Lifetime Value</h3>
+            <div class="metric-grid">
+                <div class="metric-card red">
+                    <div class="metric-value">$41</div>
+                    <div class="metric-label">Standard LTV (1.4 months avg)</div>
+                </div>
+                <div class="metric-card yellow">
+                    <div class="metric-value">$345</div>
+                    <div class="metric-label">Business LTV (2.2 months avg)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Two Customer Segments -->
+        <section>
+            <h2>Two Different Products</h2>
+
+            <p>Analysis revealed that Business and Standard customers have fundamentally different use cases:</p>
+
+            <div class="two-column">
+                <div class="chart-container">
+                    <h3 style="margin-top:0">Business Tier ($159/mo)</h3>
+                    <p><strong>Who:</strong> Marketplaces monitoring competitors, large agencies integrating via API</p>
+                    <p><strong>Use case:</strong> Competitive intelligence, contract enforcement, data integration</p>
+                    <p><strong>Churn sensitivity to data accuracy:</strong> <span class="badge badge-green">Low</span></p>
+                    <p style="margin-bottom:0"><strong>Retention:</strong> 2x longer than Standard</p>
+                </div>
+                <div class="chart-container">
+                    <h3 style="margin-top:0">Standard Tier ($29/mo)</h3>
+                    <p><strong>Who:</strong> SEO professionals, freelancers, small agencies</p>
+                    <p><strong>Use case:</strong> Find and buy cheaper links via price comparison</p>
+                    <p><strong>Churn sensitivity to data accuracy:</strong> <span class="badge badge-red">High</span></p>
+                    <p style="margin-bottom:0"><strong>Problem:</strong> One stale price = lost trust</p>
+                </div>
+            </div>
+
+            <div class="insight-box success">
+                <div class="insight-title">Key Insight</div>
+                <p style="margin:0">Business customers don't care as much about price accuracy&mdash;they need market breadth for intelligence. Standard customers depend on accuracy to make purchasing decisions. Same product, different jobs-to-be-done, different churn profiles.</p>
+            </div>
+        </section>
+
+        <!-- Why They Churn -->
+        <section>
+            <h2>Why Standard Users Churn <span class="assumption-tag">ASSUMPTION - NEEDS VALIDATION</span></h2>
+
+            <p>The hypothesized churn driver is <span class="highlight">data accuracy</span>. When aggregating lowest prices across marketplaces, FatGrid also aggregates errors:</p>
+
+            <ul style="color: var(--text-muted); margin-left: 1.5rem; margin-bottom: 1rem;">
+                <li>Publishers raise prices, some marketplaces update slowly</li>
+                <li>The "lowest price" is often outdated</li>
+                <li>Users hit errors more often than working with a single marketplace directly</li>
+                <li>Additional friction: must register on each marketplace to place orders</li>
+            </ul>
+
+            <div class="quote">
+                "The main reason for churn is data accuracy. When we aggregate the lowest prices, we also aggregate errors."
+                <br>&mdash; Founder
+            </div>
+
+            <div class="insight-box warning">
+                <div class="insight-title">Important</div>
+                <p style="margin:0">This hypothesis has not been validated with churned user interviews. The founder should talk to 5 recently churned users to confirm or discover the real reasons.</p>
+            </div>
+        </section>
+
+        <!-- Market Position -->
+        <section>
+            <h2>Market Position</h2>
+
+            <h3>Marketplace Segment: Nearly Saturated</h3>
+            <div class="chart-container">
+                <div class="bar-chart">
+                    <div class="bar-row">
+                        <span class="bar-label">Total</span>
+                        <div class="bar-track">
+                            <div class="bar-fill green" style="width: 100%">~20 marketplaces worldwide</div>
+                        </div>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-label">FatGrid</span>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="width: 40%">8 customers (~40%)</div>
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size: 0.85rem; margin-top: 1rem; margin-bottom: 0">Ceiling: Maybe $3-4k MRR max from this segment</p>
+            </div>
+
+            <h3>Agency Segment: Growth Opportunity</h3>
+            <p>Large market, currently untapped. All existing Business customers came from LinkedIn&mdash;the founder's personal brand.</p>
+
+            <h3>Competitor Acquisition Opportunity</h3>
+            <table>
+                <tr>
+                    <td>Asking price</td>
+                    <td><strong>$50,000</strong></td>
+                </tr>
+                <tr>
+                    <td>Monthly visitors</td>
+                    <td>~15,000</td>
+                </tr>
+                <tr>
+                    <td>Revenue</td>
+                    <td>$0 (free product)</td>
+                </tr>
+                <tr>
+                    <td>Data quality</td>
+                    <td><span class="badge badge-yellow">Poor</span> - some data 1+ year old</td>
+                </tr>
+                <tr>
+                    <td>Model</td>
+                    <td>User-submitted offers, no validation</td>
+                </tr>
+            </table>
+
+            <div class="insight-box">
+                <div class="insight-title">Acquisition Risk</div>
+                <p style="margin:0">With 17% monthly churn, acquiring more users just means churning more users. Fix retention first, then the acquisition math changes completely.</p>
+            </div>
+        </section>
+
+        <!-- Starter Plan Analysis -->
+        <section>
+            <h2>The $5 Starter Plan (On Hold)</h2>
+
+            <p>The original project was to design a $5 Starter tier to capture heavy free users. Extensive research was done on feature usage and paywall candidates.</p>
+
+            <h3>Why It's On Hold</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Plan</th>
+                        <th>Current Churn</th>
+                        <th>Estimated LTV</th>
+                        <th>Verdict</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Standard ($29)</td>
+                        <td>17%</td>
+                        <td>$41</td>
+                        <td><span class="badge badge-yellow">Low</span></td>
+                    </tr>
+                    <tr>
+                        <td>Starter ($5)</td>
+                        <td>Likely higher</td>
+                        <td>~$7-15</td>
+                        <td><span class="badge badge-red">Not viable</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>Adding a cheaper tier with worse retention would create complexity for minimal revenue. The research is preserved for when churn is fixed.</p>
+        </section>
+
+        <!-- Recommendations -->
+        <section>
+            <h2>Strategic Recommendations</h2>
+
+            <div class="recommendation">
+                <div class="recommendation-header">
+                    <div class="recommendation-number">1</div>
+                    <div class="recommendation-title">Validate the Churn Hypothesis</div>
+                </div>
+                <p>Talk to 5 recently churned users. Offer $25 gift card for 15 minutes. Ask: "What was the moment you decided to cancel?" This will either confirm data accuracy is the issue or reveal something unexpected.</p>
+            </div>
+
+            <div class="recommendation">
+                <div class="recommendation-header">
+                    <div class="recommendation-number">2</div>
+                    <div class="recommendation-title">Interview Long-Tenure Customers</div>
+                </div>
+                <p>Your 38 Standard customers averaging 117 days are the "survivors." Ask them: "Why are you still here when others left?" Their answers may reveal the real value proposition.</p>
+            </div>
+
+            <div class="recommendation">
+                <div class="recommendation-header">
+                    <div class="recommendation-number">3</div>
+                    <div class="recommendation-title">Consider Focusing on Business Tier</div>
+                </div>
+                <p>Business customers retain 2x longer, pay 5x more, and have a use case less sensitive to data accuracy. 10 more Business customers = +$1,590/mo = 67% MRR growth. These come from LinkedIn&mdash;can you do more of what's already working?</p>
+            </div>
+
+            <div class="recommendation">
+                <div class="recommendation-header">
+                    <div class="recommendation-number">4</div>
+                    <div class="recommendation-title">Pause the Starter Plan</div>
+                </div>
+                <p>Don't add complexity while the foundation leaks. Fix retention first, then revisit cheaper tiers.</p>
+            </div>
+
+            <div class="recommendation">
+                <div class="recommendation-header">
+                    <div class="recommendation-number">5</div>
+                    <div class="recommendation-title">Delay Competitor Acquisition</div>
+                </div>
+                <p>At current churn rates, you'd just process their users through a leaky funnel. Fix retention first&mdash;then the $50k acquisition becomes much more valuable.</p>
+            </div>
+        </section>
+
+        <!-- Data Sources -->
+        <section>
+            <h2>Data Sources</h2>
+            <p>All metrics derived from production databases synced to local DuckDB warehouse:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Source</th>
+                        <th>Tables</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>MongoDB</td>
+                        <td>mongo_users, mongo_subscriptions, mongo_payments</td>
+                        <td>User accounts, subscription status, churn dates</td>
+                    </tr>
+                    <tr>
+                        <td>ClickHouse</td>
+                        <td>ch_user_activity_logs</td>
+                        <td>Feature usage, 90-day activity</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="font-size: 0.85rem">Analysis period: 90 days ending January 11, 2026</p>
+        </section>
+
+        <footer>
+            <p>Generated from FatGrid product research &bull; January 2026</p>
+            <p style="margin-top: 0.5rem">Full data in <code>product_research/business_metrics.md</code></p>
+        </footer>
+    </div>
+</body>
+</html>
