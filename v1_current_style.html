@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FatGrid Pricing - V1 Current Style (Baseline)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            padding: 40px 20px;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #333;
+        }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .plan-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .plan-header {
+            background: #2563eb;
+            color: white;
+            padding: 24px;
+            text-align: center;
+        }
+        .plan-header.free {
+            background: #64748b;
+        }
+        .plan-header.business {
+            background: #0ea5e9;
+        }
+        .plan-price {
+            font-size: 36px;
+            font-weight: bold;
+        }
+        .plan-name {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+        .guarantee {
+            background: #dcfce7;
+            color: #166534;
+            padding: 8px;
+            text-align: center;
+            font-size: 13px;
+        }
+        .plan-features {
+            padding: 24px;
+        }
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+        .feature-item .icon {
+            color: #22c55e;
+            flex-shrink: 0;
+        }
+        .feature-item .icon.negative {
+            color: #ef4444;
+        }
+        .feature-item a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+        .cta-button {
+            display: block;
+            margin: 0 24px 24px;
+            padding: 14px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+        .cta-button:hover {
+            background: #1d4ed8;
+        }
+        .payment-note {
+            text-align: center;
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 16px;
+        }
+        .footer-note {
+            text-align: center;
+            margin-top: 32px;
+            font-size: 14px;
+            color: #64748b;
+        }
+        .footer-note a {
+            color: #2563eb;
+        }
+
+        /* Problems with this design - noted in comments */
+        .design-notes {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 40px;
+        }
+        .design-notes h3 {
+            color: #92400e;
+            margin-bottom: 12px;
+        }
+        .design-notes ul {
+            margin-left: 20px;
+            color: #78350f;
+        }
+        .design-notes li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>V1: Current Style (Baseline)</h1>
+
+        <div class="pricing-grid">
+            <!-- Free Plan -->
+            <div class="plan-card">
+                <div class="plan-header free">
+                    <div class="plan-price">$0</div>
+                    <div class="plan-name">Free Plan</div>
+                </div>
+                <div class="plan-features">
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span><strong>200 domains</strong> per check in <a href="#">Price Finder tool</a></span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span>Demo access to <a href="#">Marketplace</a></span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span>Access to <a href="#">Backlinks Profile Scanner</a></span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span>Access to <a href="#">Backlinks Monitoring</a></span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span>Access to <a href="#">Google Search Scanner</a></span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span><strong>600 units</strong> included</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span><strong>1 project</strong></span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span><strong>100 publishers</strong> per project</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span><strong>3 competitors</strong> per project</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span>Export CSV/Google (100 records max)</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span>Limited support</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon negative">✗</span>
+                        <span style="color: #9ca3af;">No early access to new features</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon negative">✗</span>
+                        <span style="color: #9ca3af;">No API access</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Standard Plan -->
+            <div class="plan-card">
+                <div class="plan-header">
+                    <div class="plan-price">$29/month</div>
+                    <div class="plan-name">Standard Plan</div>
+                </div>
+                <div class="guarantee">🛡️ 7-Day Money Back Guarantee • Risk-free</div>
+                <div class="plan-features">
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span>Full access to <a href="#">Marketplaces</a></span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span><strong>1000 domains</strong> per check in <a href="#">Price Finder tool</a></span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span>Access to <a href="#">Backlinks Profile Scanner</a></span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span>Access to <a href="#">Backlinks Monitoring</a></span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span>Access to <a href="#">Google Search Scanner</a></span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span><strong>5000 units</strong> per billing period</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span><strong>3 projects</strong></span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span><strong>3000 publishers</strong> per project</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span><strong>10 competitors</strong> per project</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span>Full CSV/Google export</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span>General support</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span>Early access to new features</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon negative">✗</span>
+                        <span style="color: #9ca3af;">No API access</span>
+                    </div>
+                </div>
+                <a href="#" class="cta-button">Upgrade</a>
+                <p class="payment-note">Secure payments with Stripe</p>
+            </div>
+
+            <!-- Business Plan -->
+            <div class="plan-card">
+                <div class="plan-header business">
+                    <div class="plan-price">$159/month</div>
+                    <div class="plan-name">Business Plan</div>
+                </div>
+                <div class="guarantee">🛡️ 7-Day Money Back Guarantee • Risk-free</div>
+                <div class="plan-features">
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span>Full access to <a href="#">Marketplaces</a></span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span><strong>5000 domains</strong> per check in <a href="#">Price Finder tool</a></span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span>Access to <a href="#">Backlinks Profile Scanner</a></span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span>Access to <a href="#">Backlinks Monitoring</a></span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span>Access to <a href="#">Google Search Scanner</a></span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span><strong>50000 units</strong> per billing period</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span><strong>15 projects</strong></span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span><strong>15000 publishers</strong> per project</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span><strong>50 competitors</strong> per project</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span>Full CSV/Google export</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span>Premium support</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span>Higher priority for early access</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">✓</span>
+                        <span>Full API access</span>
+                    </div>
+                </div>
+                <a href="#" class="cta-button">Upgrade</a>
+                <p class="payment-note">Secure payments with Stripe</p>
+            </div>
+        </div>
+
+        <p class="footer-note">
+            You can cancel or downgrade your subscription anytime with one click from your account interface.
+            We offer a full refund within the first 7 days. Read our full Cancellation and Refund Policy <a href="#">here</a>.
+        </p>
+
+        <!-- Design critique -->
+        <div class="design-notes">
+            <h3>⚠️ Issues with Current Design</h3>
+            <ul>
+                <li><strong>No value proposition header</strong> - Jumps straight to plans without explaining what FatGrid does or why it's valuable</li>
+                <li><strong>Feature-focused, not benefit-focused</strong> - Lists features but doesn't explain outcomes (e.g., "200 domains" vs "Stop overpaying for backlinks")</li>
+                <li><strong>Unclear terminology</strong> - "Demo access", "units", "publishers per project" are confusing for new visitors</li>
+                <li><strong>No social proof</strong> - Missing customer counts, logos, or testimonials</li>
+                <li><strong>No recommended plan highlight</strong> - All plans have equal visual weight</li>
+                <li><strong>No annual pricing toggle</strong> - Missing opportunity to encourage longer commitments</li>
+                <li><strong>Long feature lists</strong> - Hard to scan, causes decision fatigue</li>
+                <li><strong>No persona targeting</strong> - Doesn't indicate who each plan is for</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

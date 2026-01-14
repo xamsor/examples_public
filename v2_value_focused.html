@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FatGrid Pricing - V2 Value-Focused</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 16px;
+        }
+        .hero .subtitle {
+            font-size: 20px;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto 24px;
+        }
+
+        /* Social Proof Bar */
+        .social-proof {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+        .proof-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #475569;
+            font-size: 14px;
+        }
+        .proof-item .number {
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        /* Billing Toggle */
+        .billing-toggle {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+        .toggle-label {
+            font-size: 14px;
+            color: #64748b;
+        }
+        .toggle-label.active {
+            color: #0f172a;
+            font-weight: 600;
+        }
+        .toggle-switch {
+            width: 48px;
+            height: 26px;
+            background: #e2e8f0;
+            border-radius: 13px;
+            position: relative;
+            cursor: pointer;
+        }
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .toggle-switch.annual::after {
+            transform: translateX(22px);
+        }
+        .toggle-switch.annual {
+            background: #2563eb;
+        }
+        .save-badge {
+            background: #dcfce7;
+            color: #166534;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Pricing Cards */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+        .plan-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            border: 1px solid #e2e8f0;
+            position: relative;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .plan-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+        }
+        .plan-card.popular {
+            border: 2px solid #2563eb;
+            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.15);
+        }
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2563eb;
+            color: white;
+            padding: 4px 16px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Plan Header */
+        .plan-header {
+            margin-bottom: 24px;
+        }
+        .plan-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+        .plan-audience {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 16px;
+        }
+        .plan-price {
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+        }
+        .price-amount {
+            font-size: 48px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .price-period {
+            font-size: 16px;
+            color: #64748b;
+        }
+        .price-note {
+            font-size: 13px;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            margin-bottom: 24px;
+            transition: all 0.2s;
+        }
+        .cta-primary {
+            background: #2563eb;
+            color: white;
+        }
+        .cta-primary:hover {
+            background: #1d4ed8;
+        }
+        .cta-secondary {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+        .cta-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        /* Features */
+        .features-intro {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .feature-list {
+            list-style: none;
+        }
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: #334155;
+        }
+        .feature-icon {
+            color: #22c55e;
+            flex-shrink: 0;
+            font-size: 16px;
+        }
+        .feature-highlight {
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        /* Guarantee Banner */
+        .guarantee-banner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 48px;
+        }
+        .guarantee-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #475569;
+        }
+        .guarantee-item svg {
+            color: #22c55e;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .faq-title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 32px;
+        }
+        .faq-item {
+            border-bottom: 1px solid #e2e8f0;
+            padding: 20px 0;
+        }
+        .faq-question {
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+        .faq-answer {
+            font-size: 14px;
+            color: #64748b;
+            line-height: 1.7;
+        }
+
+        /* Design Notes */
+        .design-notes {
+            background: #ecfdf5;
+            border: 1px solid #10b981;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 48px;
+        }
+        .design-notes h3 {
+            color: #065f46;
+            margin-bottom: 12px;
+        }
+        .design-notes ul {
+            margin-left: 20px;
+            color: #047857;
+        }
+        .design-notes li {
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 900px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>Stop overpaying for backlinks</h1>
+            <p class="subtitle">Compare prices from 300,000+ publishers across 15 marketplaces. Find buyable links on any site.</p>
+
+            <div class="social-proof">
+                <div class="proof-item">
+                    <span class="number">1,200+</span> link builders
+                </div>
+                <div class="proof-item">
+                    <span class="number">300,000+</span> publishers
+                </div>
+                <div class="proof-item">
+                    <span class="number">50+</span> countries
+                </div>
+            </div>
+        </div>
+
+        <!-- Billing Toggle -->
+        <div class="billing-toggle">
+            <span class="toggle-label">Monthly</span>
+            <div class="toggle-switch annual" onclick="this.classList.toggle('annual')"></div>
+            <span class="toggle-label active">Annual</span>
+            <span class="save-badge">Save 20%</span>
+        </div>
+
+        <!-- Pricing Cards -->
+        <div class="pricing-grid">
+            <!-- Free Plan -->
+            <div class="plan-card">
+                <div class="plan-header">
+                    <div class="plan-name">Free</div>
+                    <div class="plan-audience">Try before you buy</div>
+                    <div class="plan-price">
+                        <span class="price-amount">$0</span>
+                    </div>
+                    <div class="price-note">Free forever</div>
+                </div>
+
+                <a href="#" class="cta-button cta-secondary">Get started free</a>
+
+                <p class="features-intro">Includes:</p>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Check prices on <span class="feature-highlight">200 domains</span></span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Browse marketplace (names hidden)</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Find link opportunities on any site</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span><span class="feature-highlight">120 credits/month</span> for scans</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>1 project, 100 saved publishers</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Standard Plan - POPULAR -->
+            <div class="plan-card popular">
+                <span class="popular-badge">Most Popular</span>
+                <div class="plan-header">
+                    <div class="plan-name">Standard</div>
+                    <div class="plan-audience">For solo link builders & small teams</div>
+                    <div class="plan-price">
+                        <span class="price-amount">$23</span>
+                        <span class="price-period">/month</span>
+                    </div>
+                    <div class="price-note">$276 billed annually (save $72)</div>
+                </div>
+
+                <a href="#" class="cta-button cta-primary">Start 7-day free trial</a>
+
+                <p class="features-intro">Everything in Free, plus:</p>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Check prices on <span class="feature-highlight">1,000 domains</span></span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span><span class="feature-highlight">See all publisher names</span> in marketplace</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span><span class="feature-highlight">5,000 credits/month</span> for scans</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>3 projects, 3,000 publishers each</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Unlimited CSV & Google Sheets export</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Email support</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Business Plan -->
+            <div class="plan-card">
+                <div class="plan-header">
+                    <div class="plan-name">Business</div>
+                    <div class="plan-audience">For agencies & in-house teams</div>
+                    <div class="plan-price">
+                        <span class="price-amount">$127</span>
+                        <span class="price-period">/month</span>
+                    </div>
+                    <div class="price-note">$1,524 billed annually (save $384)</div>
+                </div>
+
+                <a href="#" class="cta-button cta-primary">Start 7-day free trial</a>
+
+                <p class="features-intro">Everything in Standard, plus:</p>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Check prices on <span class="feature-highlight">5,000 domains</span></span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span><span class="feature-highlight">50,000 credits/month</span> for scans</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>15 projects, 15,000 publishers each</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span><span class="feature-highlight">API access</span> for integrations</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Priority support</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Early access to new features</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Guarantee Banner -->
+        <div class="guarantee-banner">
+            <div class="guarantee-item">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                7-day money back guarantee
+            </div>
+            <div class="guarantee-item">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                Cancel anytime
+            </div>
+            <div class="guarantee-item">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                Secure payments with Stripe
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="faq-section">
+            <h2 class="faq-title">Frequently asked questions</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">What are credits and how do they work?</div>
+                <div class="faq-answer">Credits are used for scanning features: Backlinks Profile Scanner, Google Search Scanner, and Check My Backlinks. Each scan uses credits based on the number of results. Credits refresh monthly on your billing date.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">What's the difference between Free and paid marketplace access?</div>
+                <div class="faq-answer">Free users can browse the marketplace but publisher domain names are hidden. Paid plans show all domain names, letting you see exactly which sites sell links and at what prices.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Can I upgrade, downgrade, or cancel at any time?</div>
+                <div class="faq-answer">Yes! You can change your plan anytime from your account settings. Upgrades take effect immediately. Downgrades apply at the next billing cycle. Cancel with one click—no questions asked.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Do you offer refunds?</div>
+                <div class="faq-answer">We offer a full refund within 7 days of subscribing to any paid plan—no questions asked. Just contact support.</div>
+            </div>
+        </div>
+
+        <!-- Design Notes -->
+        <div class="design-notes">
+            <h3>✅ Improvements in V2</h3>
+            <ul>
+                <li><strong>Value-focused headline</strong> - "Stop overpaying for backlinks" immediately communicates the benefit</li>
+                <li><strong>Social proof</strong> - Numbers build credibility (1,200+ users, 300k+ publishers)</li>
+                <li><strong>Annual billing toggle</strong> - 20% discount encourages longer commitments</li>
+                <li><strong>Highlighted "Most Popular" plan</strong> - Reduces decision fatigue with a clear recommendation</li>
+                <li><strong>Persona targeting</strong> - Each plan shows who it's for ("solo link builders", "agencies")</li>
+                <li><strong>Progressive feature lists</strong> - "Everything in X, plus:" reduces repetition</li>
+                <li><strong>Clearer terminology</strong> - "Credits" instead of "units", explained what they're for</li>
+                <li><strong>Free trial CTA</strong> - Lower commitment than direct "Upgrade"</li>
+                <li><strong>Guarantee banner</strong> - Consolidated trust signals</li>
+                <li><strong>FAQ section</strong> - Addresses common objections</li>
+                <li><strong>Mobile responsive</strong> - Cards stack on smaller screens</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

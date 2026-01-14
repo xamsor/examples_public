@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FatGrid Pricing - V3 Comparison Table Style</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        .hero h1 {
+            font-size: 40px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 12px;
+        }
+        .hero .subtitle {
+            font-size: 18px;
+            color: #64748b;
+            max-width: 500px;
+            margin: 0 auto 24px;
+        }
+
+        /* Trust Bar */
+        .trust-bar {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            padding: 16px 24px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            margin-bottom: 32px;
+        }
+        .trust-item {
+            font-size: 14px;
+            color: #64748b;
+        }
+        .trust-item strong {
+            color: #0f172a;
+        }
+
+        /* Billing Toggle */
+        .billing-toggle {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+        .toggle-label {
+            font-size: 14px;
+            color: #64748b;
+            cursor: pointer;
+        }
+        .toggle-label.active {
+            color: #0f172a;
+            font-weight: 600;
+        }
+        .toggle-switch {
+            width: 48px;
+            height: 26px;
+            background: #e2e8f0;
+            border-radius: 13px;
+            position: relative;
+            cursor: pointer;
+        }
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .toggle-switch.annual::after {
+            transform: translateX(22px);
+        }
+        .toggle-switch.annual {
+            background: #2563eb;
+        }
+        .save-badge {
+            background: #dcfce7;
+            color: #166534;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Pricing Table */
+        .pricing-table-wrapper {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+            overflow: hidden;
+            margin-bottom: 48px;
+        }
+
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        /* Table Header */
+        .pricing-table thead {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .pricing-table thead th {
+            background: #f8fafc;
+            padding: 24px 16px;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .pricing-table thead th:first-child {
+            text-align: left;
+            width: 280px;
+        }
+        .plan-header-cell {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .plan-header-cell.popular {
+            background: #eff6ff;
+            margin: -24px -16px;
+            padding: 24px 16px;
+            border-radius: 0;
+        }
+        .popular-tag {
+            background: #2563eb;
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+        }
+        .plan-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+        .plan-audience {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 2px;
+        }
+        .plan-price-header {
+            font-size: 32px;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 8px 0 4px;
+        }
+        .plan-price-header span {
+            font-size: 16px;
+            font-weight: 400;
+            color: #64748b;
+        }
+        .price-note {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+        .plan-cta {
+            display: inline-block;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: 12px;
+            transition: all 0.2s;
+        }
+        .plan-cta.primary {
+            background: #2563eb;
+            color: white;
+        }
+        .plan-cta.primary:hover {
+            background: #1d4ed8;
+        }
+        .plan-cta.secondary {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+        .plan-cta.secondary:hover {
+            background: #e2e8f0;
+        }
+
+        /* Table Body */
+        .pricing-table tbody tr {
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .pricing-table tbody tr:last-child {
+            border-bottom: none;
+        }
+        .pricing-table tbody tr:hover {
+            background: #fafbfc;
+        }
+        .pricing-table td {
+            padding: 16px;
+            text-align: center;
+            font-size: 14px;
+            color: #334155;
+        }
+        .pricing-table td:first-child {
+            text-align: left;
+            font-weight: 500;
+            color: #0f172a;
+        }
+
+        /* Feature category rows */
+        .category-row td {
+            background: #f8fafc;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #64748b;
+            padding: 12px 16px;
+        }
+        .category-row td:first-child {
+            color: #64748b;
+        }
+
+        /* Feature values */
+        .check {
+            color: #22c55e;
+            font-size: 18px;
+        }
+        .cross {
+            color: #cbd5e1;
+            font-size: 18px;
+        }
+        .value-highlight {
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        /* Feature tooltip */
+        .feature-name {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .info-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            background: #e2e8f0;
+            border-radius: 50%;
+            font-size: 10px;
+            color: #64748b;
+            cursor: help;
+        }
+
+        /* Popular column highlight */
+        .pricing-table td:nth-child(3) {
+            background: #fafbff;
+        }
+        .pricing-table .category-row td:nth-child(3) {
+            background: #f0f5ff;
+        }
+
+        /* Guarantees */
+        .guarantees {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            padding: 24px;
+            background: #f0fdf4;
+            border-radius: 12px;
+            margin-bottom: 48px;
+        }
+        .guarantee-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #166534;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .faq-title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 32px;
+        }
+        .faq-item {
+            border-bottom: 1px solid #e2e8f0;
+            padding: 20px 0;
+        }
+        .faq-question {
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+        .faq-answer {
+            font-size: 14px;
+            color: #64748b;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 768px) {
+            .pricing-table-wrapper {
+                overflow-x: auto;
+            }
+            .pricing-table {
+                min-width: 600px;
+            }
+            .bottom-section {
+                grid-template-columns: 1fr;
+            }
+            .guarantees {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero -->
+        <div class="hero">
+            <h1>Simple, transparent pricing</h1>
+            <p class="subtitle">Find the best backlink deals from 300,000+ publishers. Start free, upgrade when ready.</p>
+        </div>
+
+        <!-- Trust Bar -->
+        <div class="trust-bar">
+            <span class="trust-item"><strong>1,200+</strong> link builders</span>
+            <span class="trust-item"><strong>300,000+</strong> publishers indexed</span>
+            <span class="trust-item"><strong>15</strong> marketplaces</span>
+            <span class="trust-item"><strong>7-day</strong> money back guarantee</span>
+        </div>
+
+        <!-- Billing Toggle -->
+        <div class="billing-toggle">
+            <span class="toggle-label" onclick="setBilling('monthly')">Monthly</span>
+            <div class="toggle-switch annual" id="billingToggle" onclick="toggleBilling()"></div>
+            <span class="toggle-label active" onclick="setBilling('annual')">Annual</span>
+            <span class="save-badge">Save 15%</span>
+        </div>
+
+        <!-- Pricing Table -->
+        <div class="pricing-table-wrapper">
+            <table class="pricing-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>
+                            <div class="plan-header-cell">
+                                <div class="plan-title">Explorer</div>
+                                <div class="plan-audience">See what FatGrid can do</div>
+                                <div class="plan-price-header">$0</div>
+                                <a href="#" class="plan-cta secondary">Get started</a>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="plan-header-cell popular">
+                                <span class="popular-tag">MOST POPULAR</span>
+                                <div class="plan-title">Professional</div>
+                                <div class="plan-audience">For serious link builders</div>
+                                <div class="plan-price-header" id="proPriceHeader">$25<span>/mo</span></div>
+                                <div class="price-note" id="proAnnualNote">$300 billed annually</div>
+                                <a href="#" class="plan-cta primary">Start free trial</a>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="plan-header-cell">
+                                <div class="plan-title">Agency</div>
+                                <div class="plan-audience">For teams & high volume</div>
+                                <div class="plan-price-header" id="agencyPriceHeader">$135<span>/mo</span></div>
+                                <div class="price-note" id="agencyAnnualNote">$1,620 billed annually</div>
+                                <a href="#" class="plan-cta primary">Start free trial</a>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Core Tools -->
+                    <tr class="category-row">
+                        <td colspan="4">Core Tools</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="feature-name">
+                                Price Finder domains
+                                <span class="info-icon" title="Check prices across marketplaces">?</span>
+                            </span>
+                        </td>
+                        <td>200/day</td>
+                        <td><span class="value-highlight">1,000</span></td>
+                        <td><span class="value-highlight">5,000</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="feature-name">
+                                Marketplace access
+                                <span class="info-icon" title="Browse publishers selling backlinks">?</span>
+                            </span>
+                        </td>
+                        <td>Preview only</td>
+                        <td><span class="value-highlight">Full access</span></td>
+                        <td><span class="value-highlight">Full access</span></td>
+                    </tr>
+                    <tr>
+                        <td>Backlinks Profile Scanner</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Google Search Scanner</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Check My Backlinks</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Backlinks Monitoring</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+
+                    <!-- Usage Limits -->
+                    <tr class="category-row">
+                        <td colspan="4">Usage & Limits</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="feature-name">
+                                Monthly credits
+                                <span class="info-icon" title="Credits for scanning features">?</span>
+                            </span>
+                        </td>
+                        <td>120</td>
+                        <td><span class="value-highlight">5,000</span></td>
+                        <td><span class="value-highlight">50,000</span></td>
+                    </tr>
+                    <tr>
+                        <td>Projects</td>
+                        <td>1</td>
+                        <td>3</td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        <td>Publishers per project</td>
+                        <td>100</td>
+                        <td>3,000</td>
+                        <td>15,000</td>
+                    </tr>
+                    <tr>
+                        <td>Competitors per project</td>
+                        <td>3</td>
+                        <td>10</td>
+                        <td>50</td>
+                    </tr>
+
+                    <!-- Export & Integrations -->
+                    <tr class="category-row">
+                        <td colspan="4">Export & Integrations</td>
+                    </tr>
+                    <tr>
+                        <td>CSV export</td>
+                        <td>100 rows</td>
+                        <td><span class="value-highlight">Unlimited</span></td>
+                        <td><span class="value-highlight">Unlimited</span></td>
+                    </tr>
+                    <tr>
+                        <td>Google Sheets export</td>
+                        <td>100 rows</td>
+                        <td><span class="value-highlight">Unlimited</span></td>
+                        <td><span class="value-highlight">Unlimited</span></td>
+                    </tr>
+                    <tr>
+                        <td>API access</td>
+                        <td><span class="cross">—</span></td>
+                        <td><span class="cross">—</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+
+                    <!-- Support -->
+                    <tr class="category-row">
+                        <td colspan="4">Support & Extras</td>
+                    </tr>
+                    <tr>
+                        <td>Support</td>
+                        <td>Community</td>
+                        <td>Email</td>
+                        <td><span class="value-highlight">Priority</span></td>
+                    </tr>
+                    <tr>
+                        <td>Early access to features</td>
+                        <td><span class="cross">—</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Guarantees -->
+        <div class="guarantees">
+            <div class="guarantee-item">
+                <span>✓</span> 7-day money back guarantee
+            </div>
+            <div class="guarantee-item">
+                <span>✓</span> Cancel or downgrade anytime
+            </div>
+            <div class="guarantee-item">
+                <span>✓</span> Secure payments via Stripe
+            </div>
+            <div class="guarantee-item">
+                <span>✓</span> No long-term contracts
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="faq-section">
+            <h2 class="faq-title">Frequently asked questions</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">What are credits and how do they work?</div>
+                <div class="faq-answer">Credits power the scanning features: Backlinks Profile Scanner, Google Search Scanner, and Check My Backlinks. Each scan consumes credits based on results found. Credits refresh monthly on your billing date.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">What is "Preview only" marketplace?</div>
+                <div class="faq-answer">Free users can browse and filter the marketplace, but publisher domain names are hidden. Upgrade to see exactly which sites are selling links and compare their prices across marketplaces.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Can I upgrade, downgrade, or cancel at any time?</div>
+                <div class="faq-answer">Yes! You can change your plan anytime from your account settings. Upgrades take effect immediately. Downgrades apply at the next billing cycle. Cancel with one click—no questions asked.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Do you offer refunds?</div>
+                <div class="faq-answer">We offer a full refund within 7 days of subscribing to any paid plan—no questions asked. Just contact support.</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Billing toggle functionality
+        let isAnnual = true;
+
+        function toggleBilling() {
+            isAnnual = !isAnnual;
+            updateBillingUI();
+        }
+
+        function setBilling(type) {
+            isAnnual = (type === 'annual');
+            updateBillingUI();
+        }
+
+        function updateBillingUI() {
+            const toggle = document.getElementById('billingToggle');
+            const labels = document.querySelectorAll('.toggle-label');
+            const proPriceHeader = document.getElementById('proPriceHeader');
+            const proAnnualNote = document.getElementById('proAnnualNote');
+            const agencyPriceHeader = document.getElementById('agencyPriceHeader');
+            const agencyAnnualNote = document.getElementById('agencyAnnualNote');
+
+            if (isAnnual) {
+                toggle.classList.add('annual');
+                labels[0].classList.remove('active');
+                labels[1].classList.add('active');
+                proPriceHeader.innerHTML = '$25<span>/mo</span>';
+                proAnnualNote.textContent = '$300 billed annually';
+                proAnnualNote.style.display = 'block';
+                agencyPriceHeader.innerHTML = '$135<span>/mo</span>';
+                agencyAnnualNote.textContent = '$1,620 billed annually';
+                agencyAnnualNote.style.display = 'block';
+            } else {
+                toggle.classList.remove('annual');
+                labels[0].classList.add('active');
+                labels[1].classList.remove('active');
+                proPriceHeader.innerHTML = '$29<span>/mo</span>';
+                proAnnualNote.style.display = 'none';
+                agencyPriceHeader.innerHTML = '$159<span>/mo</span>';
+                agencyAnnualNote.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

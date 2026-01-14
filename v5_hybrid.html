@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FatGrid Pricing - V5 Hybrid (Cards + Table)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 16px;
+        }
+        .hero .subtitle {
+            font-size: 20px;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto 24px;
+        }
+
+        /* Social Proof Bar */
+        .social-proof {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+        .proof-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #475569;
+            font-size: 14px;
+        }
+        .proof-item .number {
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        /* Billing Toggle */
+        .billing-toggle {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+        .toggle-label {
+            font-size: 14px;
+            color: #64748b;
+            cursor: pointer;
+        }
+        .toggle-label.active {
+            color: #0f172a;
+            font-weight: 600;
+        }
+        .toggle-switch {
+            width: 48px;
+            height: 26px;
+            background: #e2e8f0;
+            border-radius: 13px;
+            position: relative;
+            cursor: pointer;
+        }
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .toggle-switch.annual::after {
+            transform: translateX(22px);
+        }
+        .toggle-switch.annual {
+            background: #2563eb;
+        }
+        .save-badge {
+            background: #dcfce7;
+            color: #166534;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Pricing Cards */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+        .plan-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            border: 1px solid #e2e8f0;
+            position: relative;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .plan-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+        }
+        .plan-card.popular {
+            border: 2px solid #2563eb;
+            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.15);
+        }
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2563eb;
+            color: white;
+            padding: 4px 16px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Plan Header */
+        .plan-header {
+            margin-bottom: 24px;
+        }
+        .plan-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+        .plan-audience {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 16px;
+        }
+        .plan-price {
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+        }
+        .price-amount {
+            font-size: 48px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .price-period {
+            font-size: 16px;
+            color: #64748b;
+        }
+        .price-note {
+            font-size: 13px;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            margin-bottom: 24px;
+            transition: all 0.2s;
+        }
+        .cta-primary {
+            background: #2563eb;
+            color: white;
+        }
+        .cta-primary:hover {
+            background: #1d4ed8;
+        }
+        .cta-secondary {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+        .cta-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        /* Features */
+        .features-intro {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .feature-list {
+            list-style: none;
+        }
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: #334155;
+        }
+        .feature-icon {
+            color: #22c55e;
+            flex-shrink: 0;
+            font-size: 16px;
+        }
+        .feature-highlight {
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        /* Guarantee Banner */
+        .guarantee-banner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 64px;
+        }
+        .guarantee-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #475569;
+        }
+        .guarantee-item svg {
+            color: #22c55e;
+        }
+
+        /* Compare All Features Section */
+        .compare-section {
+            margin-bottom: 64px;
+        }
+        .compare-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .compare-header h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+        .compare-header p {
+            font-size: 16px;
+            color: #64748b;
+        }
+
+        /* Comparison Table */
+        .pricing-table-wrapper {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+            overflow: visible;
+        }
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .pricing-table thead {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .pricing-table thead th {
+            background: #f8fafc;
+            padding: 20px 16px;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 14px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+        .pricing-table thead th:first-child {
+            text-align: left;
+            width: 280px;
+            color: #64748b;
+            font-weight: 500;
+        }
+        .pricing-table thead th.popular-col {
+            background: #eff6ff;
+        }
+        .pricing-table tbody tr {
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .pricing-table tbody tr:last-child {
+            border-bottom: none;
+        }
+        .pricing-table tbody tr:hover {
+            background: #fafbfc;
+        }
+        .pricing-table td {
+            padding: 14px 16px;
+            text-align: center;
+            font-size: 14px;
+            color: #334155;
+        }
+        .pricing-table td:first-child {
+            text-align: left;
+            font-weight: 500;
+            color: #0f172a;
+        }
+        .pricing-table td.popular-col {
+            background: #fafbff;
+        }
+
+        /* Feature category rows */
+        .category-row td {
+            background: #f8fafc;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #64748b;
+            padding: 10px 16px;
+        }
+        .category-row td.popular-col {
+            background: #f0f5ff;
+        }
+
+        /* Feature values */
+        .check {
+            color: #22c55e;
+            font-size: 18px;
+        }
+        .cross {
+            color: #cbd5e1;
+            font-size: 18px;
+        }
+        .value-highlight {
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        /* Feature tooltip */
+        .feature-name {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .info-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            background: #e2e8f0;
+            border-radius: 50%;
+            font-size: 10px;
+            color: #64748b;
+            cursor: help;
+            position: relative;
+        }
+        .info-icon:hover {
+            background: #cbd5e1;
+        }
+        .info-icon .tooltip-text {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 400;
+            white-space: nowrap;
+            z-index: 50;
+            margin-bottom: 6px;
+            transition: opacity 0.15s, visibility 0.15s;
+        }
+        .info-icon .tooltip-text::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: #1e293b;
+        }
+        .info-icon:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Credits Breakdown Section */
+        .credits-section {
+            max-width: 900px;
+            margin: 0 auto 64px;
+        }
+        .credits-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .credits-header h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+        .credits-header p {
+            font-size: 16px;
+            color: #64748b;
+        }
+        .credits-breakdown {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+            padding: 32px;
+        }
+        .credit-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        .credit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px;
+            background: #f8fafc;
+            border-radius: 12px;
+        }
+        .credit-icon {
+            width: 40px;
+            height: 40px;
+            background: #dbeafe;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .credit-icon svg {
+            width: 20px;
+            height: 20px;
+            color: #2563eb;
+        }
+        .credit-info h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 2px;
+        }
+        .credit-info p {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 6px;
+        }
+        .credit-cost-tag {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .faq-title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 32px;
+        }
+        .faq-item {
+            border-bottom: 1px solid #e2e8f0;
+            padding: 20px 0;
+        }
+        .faq-question {
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+        .faq-answer {
+            font-size: 14px;
+            color: #64748b;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 900px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .guarantee-banner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .pricing-table-wrapper {
+                overflow-x: auto;
+                overflow-y: visible;
+            }
+            .pricing-table {
+                min-width: 600px;
+            }
+            .credit-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>The largest backlinks inventory on the market</h1>
+            <p class="subtitle">Guest posting publishers from the world's leading marketplaces and sellers. Aggregated, searchable, and priced. One search, full coverage.</p>
+
+            <div class="social-proof">
+                <div class="proof-item">
+                    Trusted by <span class="number">1,200+</span> link builders from <span class="number">50+</span> countries. <span class="number">300,000+</span> publishers indexed.
+                </div>
+            </div>
+        </div>
+
+        <!-- Billing Toggle -->
+        <div class="billing-toggle">
+            <span class="toggle-label active" onclick="setBilling('monthly')">Monthly</span>
+            <div class="toggle-switch" id="billingToggle" onclick="toggleBilling()"></div>
+            <span class="toggle-label" onclick="setBilling('annual')">Annual</span>
+            <span class="save-badge">Save 15%</span>
+        </div>
+
+        <!-- Pricing Cards -->
+        <div class="pricing-grid">
+            <!-- Free Plan -->
+            <div class="plan-card">
+                <div class="plan-header">
+                    <div class="plan-name">Free</div>
+                    <div class="plan-audience">See what FatGrid can do</div>
+                    <div class="plan-price">
+                        <span class="price-amount">$0</span>
+                    </div>
+                    <div class="price-note" id="freeNoteCard" style="display: none;">Just free</div>
+                </div>
+
+                <a href="#" class="cta-button cta-secondary">Get started free</a>
+
+                <p class="features-intro">Includes:</p>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Check prices on <span class="feature-highlight">200 domains/day</span></span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Browse marketplace (<span class="feature-highlight">domains hidden</span>)</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span><span class="feature-highlight">120 credits/month</span> for scans</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Export up to <span class="feature-highlight">100 domains</span></span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>1 project, 100 saved domains</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Pro Plan - POPULAR -->
+            <div class="plan-card popular">
+                <span class="popular-badge">Most Popular</span>
+                <div class="plan-header">
+                    <div class="plan-name">Pro</div>
+                    <div class="plan-audience">For solo link builders & small teams</div>
+                    <div class="plan-price">
+                        <span class="price-amount" id="proPriceCard">$29</span>
+                        <span class="price-period">/month</span>
+                    </div>
+                    <div class="price-note" id="proNoteCard" style="display: none;">$300 billed annually</div>
+                </div>
+
+                <a href="#" class="cta-button cta-primary">Start 7-day free trial</a>
+
+                <p class="features-intro">Everything in Free, plus:</p>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Check prices on <span class="feature-highlight">1,000 domains/check</span>, unlimited checks</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span><span class="feature-highlight">See all domains</span> in marketplace</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span><span class="feature-highlight">5,000 credits/month</span> for scans</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span><span class="feature-highlight">Unlimited</span> CSV & Google Sheets export</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>3 projects, 3,000 domains each</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Email support</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Business Plan -->
+            <div class="plan-card">
+                <div class="plan-header">
+                    <div class="plan-name">Business</div>
+                    <div class="plan-audience">For agencies and data integrations</div>
+                    <div class="plan-price">
+                        <span class="price-amount" id="businessPriceCard">$159</span>
+                        <span class="price-period">/month</span>
+                    </div>
+                    <div class="price-note" id="businessNoteCard" style="display: none;">$1,620 billed annually</div>
+                </div>
+
+                <a href="#" class="cta-button cta-primary">Subscribe</a>
+
+                <p class="features-intro">Everything in Pro, plus:</p>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Check prices on <span class="feature-highlight">5,000 domains/check</span></span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span><span class="feature-highlight">50,000 credits/month</span> for scans</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>15 projects, 15,000 domains each</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span><span class="feature-highlight">API access</span></span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Priority support</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Early access to new features</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Guarantee Banner -->
+        <div class="guarantee-banner">
+            <div class="guarantee-item">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                7-day free trial
+            </div>
+            <div class="guarantee-item">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                Cancel anytime
+            </div>
+            <div class="guarantee-item">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                Secure payments with Stripe
+            </div>
+        </div>
+
+        <!-- Compare All Features Section -->
+        <div class="compare-section">
+            <div class="compare-header">
+                <h2>Compare all features</h2>
+                <p>Not sure which plan is right for you? Here's everything included.</p>
+            </div>
+
+            <div class="pricing-table-wrapper">
+                <table class="pricing-table">
+                    <thead>
+                        <tr>
+                            <th>Features</th>
+                            <th>Free</th>
+                            <th class="popular-col">Pro</th>
+                            <th>Business</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Core Tools -->
+                        <tr class="category-row">
+                            <td colspan="4">Core Tools</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="feature-name">
+                                    Price Finder
+                                    <span class="info-icon">?<span class="tooltip-text">Check prices across marketplaces</span></span>
+                                </span>
+                            </td>
+                            <td>200 domains/day</td>
+                            <td class="popular-col"><span class="value-highlight">1,000/check, unlimited</span></td>
+                            <td><span class="value-highlight">5,000/check, unlimited</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="feature-name">
+                                    Marketplace access
+                                    <span class="info-icon">?<span class="tooltip-text">Browse domains selling backlinks</span></span>
+                                </span>
+                            </td>
+                            <td>Domains hidden</td>
+                            <td class="popular-col"><span class="value-highlight">See all domains</span></td>
+                            <td><span class="value-highlight">See all domains</span></td>
+                        </tr>
+                        <tr>
+                            <td>Google Search Scanner</td>
+                            <td><span class="check">✓</span></td>
+                            <td class="popular-col"><span class="check">✓</span></td>
+                            <td><span class="check">✓</span></td>
+                        </tr>
+                        <tr>
+                            <td>Backlinks Profile Scanner</td>
+                            <td><span class="check">✓</span></td>
+                            <td class="popular-col"><span class="check">✓</span></td>
+                            <td><span class="check">✓</span></td>
+                        </tr>
+                        <tr>
+                            <td>Backlinks Monitoring</td>
+                            <td><span class="check">✓</span></td>
+                            <td class="popular-col"><span class="check">✓</span></td>
+                            <td><span class="check">✓</span></td>
+                        </tr>
+
+                        <!-- Usage Limits -->
+                        <tr class="category-row">
+                            <td colspan="4">Usage & Limits</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="feature-name">
+                                    Monthly credits
+                                    <span class="info-icon">?<span class="tooltip-text">Credits for scanning features</span></span>
+                                </span>
+                            </td>
+                            <td>120</td>
+                            <td class="popular-col"><span class="value-highlight">5,000</span></td>
+                            <td><span class="value-highlight">50,000</span></td>
+                        </tr>
+                        <tr>
+                            <td>Projects</td>
+                            <td>1</td>
+                            <td class="popular-col">3</td>
+                            <td>15</td>
+                        </tr>
+                        <tr>
+                            <td>Domains per project</td>
+                            <td>100</td>
+                            <td class="popular-col">3,000</td>
+                            <td>15,000</td>
+                        </tr>
+                        <tr>
+                            <td>Competitors per project</td>
+                            <td>3</td>
+                            <td class="popular-col">10</td>
+                            <td>50</td>
+                        </tr>
+
+                        <!-- Export & Integrations -->
+                        <tr class="category-row">
+                            <td colspan="4">Export & Integrations</td>
+                        </tr>
+                        <tr>
+                            <td>CSV & Google Sheets export</td>
+                            <td>100 domains</td>
+                            <td class="popular-col"><span class="value-highlight">Unlimited</span></td>
+                            <td><span class="value-highlight">Unlimited</span></td>
+                        </tr>
+                        <tr>
+                            <td>API access</td>
+                            <td><span class="cross">—</span></td>
+                            <td class="popular-col"><span class="cross">—</span></td>
+                            <td><span class="check">✓</span></td>
+                        </tr>
+
+                        <!-- Support -->
+                        <tr class="category-row">
+                            <td colspan="4">Support & Extras</td>
+                        </tr>
+                        <tr>
+                            <td>Support</td>
+                            <td>Community</td>
+                            <td class="popular-col">Email</td>
+                            <td><span class="value-highlight">Priority</span></td>
+                        </tr>
+                        <tr>
+                            <td>Early access to features</td>
+                            <td><span class="cross">—</span></td>
+                            <td class="popular-col"><span class="check">✓</span></td>
+                            <td><span class="check">✓</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Credits Breakdown Section -->
+        <div class="credits-section">
+            <div class="credits-header">
+                <h2>How credits work</h2>
+                <p>Credits power the scanning features. Each feature has a different cost based on data complexity.</p>
+            </div>
+
+            <div class="credits-breakdown">
+                <div class="credit-grid">
+                    <div class="credit-item">
+                        <div class="credit-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        </div>
+                        <div class="credit-info">
+                            <h3>Google Search Scanner</h3>
+                            <p>Scans up to 200 Google search results</p>
+                            <span class="credit-cost-tag">60 credits per scan</span>
+                        </div>
+                    </div>
+
+                    <div class="credit-item">
+                        <div class="credit-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                        </div>
+                        <div class="credit-info">
+                            <h3>Backlinks Profile Scanner</h3>
+                            <p>Extracts refdomains for any website</p>
+                            <span class="credit-cost-tag">2 credits per domain</span>
+                        </div>
+                    </div>
+
+                    <div class="credit-item">
+                        <div class="credit-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <div class="credit-info">
+                            <h3>Backlinks Monitoring</h3>
+                            <p>Checks if your backlinks are still live</p>
+                            <span class="credit-cost-tag">1 credit per link</span>
+                        </div>
+                    </div>
+
+                    <div class="credit-item">
+                        <div class="credit-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <div class="credit-info">
+                            <h3>Contact Data Extraction</h3>
+                            <p>Finds email contacts for any domain</p>
+                            <span class="credit-cost-tag">15 credits per domain</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="faq-section">
+            <h2 class="faq-title">Frequently asked questions</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">What are credits and how do they work?</div>
+                <div class="faq-answer">Credits are a flexible budget for scanning features. Use them however you want — run more Google searches, scan more backlink profiles, or monitor more links. Credits refresh monthly on your billing date.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">What is "Preview only" marketplace?</div>
+                <div class="faq-answer">Free users can browse and filter the marketplace, but publisher domain names are hidden. Upgrade to see exactly which sites are selling links and compare their prices across marketplaces.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Can I upgrade, downgrade, or cancel at any time?</div>
+                <div class="faq-answer">Yes! You can change your plan anytime from your account settings. Upgrades take effect immediately. Downgrades apply at the next billing cycle. Cancel with one click—no questions asked.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Do you offer refunds?</div>
+                <div class="faq-answer">We offer a full refund within 7 days of subscribing to any paid plan—no questions asked. Just contact support.</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Billing toggle functionality - default to monthly
+        let isAnnual = false;
+
+        function toggleBilling() {
+            isAnnual = !isAnnual;
+            updateBillingUI();
+        }
+
+        function setBilling(type) {
+            isAnnual = (type === 'annual');
+            updateBillingUI();
+        }
+
+        function updateBillingUI() {
+            const toggle = document.getElementById('billingToggle');
+            const labels = document.querySelectorAll('.toggle-label');
+
+            // Card prices
+            const freeNoteCard = document.getElementById('freeNoteCard');
+            const proPriceCard = document.getElementById('proPriceCard');
+            const proNoteCard = document.getElementById('proNoteCard');
+            const businessPriceCard = document.getElementById('businessPriceCard');
+            const businessNoteCard = document.getElementById('businessNoteCard');
+
+            if (isAnnual) {
+                toggle.classList.add('annual');
+                labels[0].classList.remove('active');
+                labels[1].classList.add('active');
+
+                // Annual pricing (15% off)
+                freeNoteCard.style.display = 'block';
+                proPriceCard.textContent = '$25';
+                proNoteCard.textContent = '$300 billed annually';
+                proNoteCard.style.display = 'block';
+                businessPriceCard.textContent = '$135';
+                businessNoteCard.textContent = '$1,620 billed annually';
+                businessNoteCard.style.display = 'block';
+            } else {
+                toggle.classList.remove('annual');
+                labels[0].classList.add('active');
+                labels[1].classList.remove('active');
+
+                // Monthly pricing (full prices)
+                freeNoteCard.style.display = 'none';
+                proPriceCard.textContent = '$29';
+                proNoteCard.style.display = 'none';
+                businessPriceCard.textContent = '$159';
+                businessNoteCard.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

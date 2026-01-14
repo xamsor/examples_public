@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credits Display - V1: Tooltips in Table</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            padding: 40px 20px;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 24px;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+        .description {
+            color: #64748b;
+            margin-bottom: 32px;
+            font-size: 14px;
+        }
+
+        /* Table Styles */
+        .pricing-table-wrapper {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+            overflow: visible;
+        }
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .pricing-table thead th {
+            background: #f8fafc;
+            padding: 16px;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 14px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+        .pricing-table thead th:first-child {
+            text-align: left;
+            color: #64748b;
+            font-weight: 500;
+        }
+        .pricing-table thead th.popular-col {
+            background: #eff6ff;
+        }
+        .pricing-table tbody tr {
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .pricing-table td {
+            padding: 14px 16px;
+            text-align: center;
+            font-size: 14px;
+            color: #334155;
+        }
+        .pricing-table td:first-child {
+            text-align: left;
+            font-weight: 500;
+            color: #0f172a;
+        }
+        .pricing-table td.popular-col {
+            background: #fafbff;
+        }
+        .category-row td {
+            background: #f8fafc;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #64748b;
+            padding: 10px 16px;
+        }
+        .value-highlight {
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        /* Feature with tooltip */
+        .feature-name {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .info-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            background: #e2e8f0;
+            border-radius: 50%;
+            font-size: 10px;
+            color: #64748b;
+            cursor: help;
+            position: relative;
+        }
+        .info-icon:hover {
+            background: #cbd5e1;
+        }
+        .info-icon .tooltip-text {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 400;
+            white-space: nowrap;
+            z-index: 50;
+            margin-bottom: 6px;
+            transition: opacity 0.15s, visibility 0.15s;
+        }
+        .info-icon .tooltip-text::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: #1e293b;
+        }
+        .info-icon:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Credit cost badge */
+        .credit-cost {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: #f1f5f9;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            color: #64748b;
+            margin-left: 8px;
+        }
+        .credit-cost .cost {
+            font-weight: 600;
+            color: #475569;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>V1: Tooltips with Credit Costs</h1>
+        <p class="description">Credit costs shown in tooltips on hover. Clean table, details on demand.</p>
+
+        <div class="pricing-table-wrapper">
+            <table class="pricing-table">
+                <thead>
+                    <tr>
+                        <th>Features</th>
+                        <th>Free</th>
+                        <th class="popular-col">Pro</th>
+                        <th>Business</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="category-row">
+                        <td colspan="4">Core Tools</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="feature-name">
+                                Google Search Scanner
+                                <span class="info-icon">?<span class="tooltip-text">Scans up to 200 Google results. Costs 60 credits per scan.</span></span>
+                            </span>
+                        </td>
+                        <td><span class="value-highlight">2 scans/mo</span></td>
+                        <td class="popular-col"><span class="value-highlight">83 scans/mo</span></td>
+                        <td><span class="value-highlight">833 scans/mo</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="feature-name">
+                                Backlinks Profile Scanner
+                                <span class="info-icon">?<span class="tooltip-text">Extracts refdomains for any site. Costs 2 credits per domain.</span></span>
+                            </span>
+                        </td>
+                        <td><span class="value-highlight">60 domains/mo</span></td>
+                        <td class="popular-col"><span class="value-highlight">2,500 domains/mo</span></td>
+                        <td><span class="value-highlight">25,000 domains/mo</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="feature-name">
+                                Backlinks Monitoring
+                                <span class="info-icon">?<span class="tooltip-text">Monitors your backlinks status. Costs 1 credit per link per crawl.</span></span>
+                            </span>
+                        </td>
+                        <td><span class="value-highlight">120 links/mo</span></td>
+                        <td class="popular-col"><span class="value-highlight">5,000 links/mo</span></td>
+                        <td><span class="value-highlight">50,000 links/mo</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="feature-name">
+                                Contact Data Extraction
+                                <span class="info-icon">?<span class="tooltip-text">Finds email contacts for any domain. Costs 15 credits per domain.</span></span>
+                            </span>
+                        </td>
+                        <td><span class="value-highlight">8 domains/mo</span></td>
+                        <td class="popular-col"><span class="value-highlight">333 domains/mo</span></td>
+                        <td><span class="value-highlight">3,333 domains/mo</span></td>
+                    </tr>
+
+                    <tr class="category-row">
+                        <td colspan="4">Usage</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="feature-name">
+                                Monthly credits
+                                <span class="info-icon">?<span class="tooltip-text">Credits power all scanning features. Refresh monthly.</span></span>
+                            </span>
+                        </td>
+                        <td>120</td>
+                        <td class="popular-col"><span class="value-highlight">5,000</span></td>
+                        <td><span class="value-highlight">50,000</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
