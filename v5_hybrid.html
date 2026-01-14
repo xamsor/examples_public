@@ -498,6 +498,50 @@
             font-weight: 600;
         }
 
+        /* Plan Usage Table */
+        .plan-usage {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #e2e8f0;
+        }
+        .plan-usage h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 16px;
+        }
+        .usage-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        .usage-table th {
+            text-align: left;
+            padding: 10px 12px;
+            background: #f1f5f9;
+            color: #64748b;
+            font-weight: 500;
+        }
+        .usage-table th:not(:first-child) {
+            text-align: center;
+        }
+        .usage-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #334155;
+        }
+        .usage-table td:not(:first-child) {
+            text-align: center;
+        }
+        .usage-table td:first-child {
+            font-weight: 500;
+            color: #0f172a;
+        }
+        .usage-table .highlight {
+            font-weight: 600;
+            color: #2563eb;
+        }
+
         /* FAQ Section */
         .faq-section {
             max-width: 700px;
@@ -903,6 +947,46 @@
                             <span class="credit-cost-tag">15 credits per domain</span>
                         </div>
                     </div>
+                </div>
+
+                <div class="plan-usage">
+                    <h3>What you can do with each plan</h3>
+                    <table class="usage-table">
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Free (120)</th>
+                                <th>Pro (5,000)</th>
+                                <th>Business (50,000)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Google Search scans</td>
+                                <td>2</td>
+                                <td class="highlight">83</td>
+                                <td class="highlight">833</td>
+                            </tr>
+                            <tr>
+                                <td>Backlinks profiles</td>
+                                <td>60</td>
+                                <td class="highlight">2,500</td>
+                                <td class="highlight">25,000</td>
+                            </tr>
+                            <tr>
+                                <td>Links monitored</td>
+                                <td>120</td>
+                                <td class="highlight">5,000</td>
+                                <td class="highlight">50,000</td>
+                            </tr>
+                            <tr>
+                                <td>Contact extractions</td>
+                                <td>8</td>
+                                <td class="highlight">333</td>
+                                <td class="highlight">3,333</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
