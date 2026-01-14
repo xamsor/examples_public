@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credits Display - V4: FAQ Style</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            padding: 40px 20px;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 24px;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+        .description {
+            color: #64748b;
+            margin-bottom: 32px;
+            font-size: 14px;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+            padding: 32px;
+        }
+        .faq-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 24px;
+        }
+        .faq-item {
+            border-bottom: 1px solid #e2e8f0;
+            padding: 20px 0;
+        }
+        .faq-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .faq-question {
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+        .faq-answer {
+            font-size: 14px;
+            color: #64748b;
+            line-height: 1.7;
+        }
+
+        /* Credit cost table inside FAQ */
+        .credit-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+            font-size: 13px;
+        }
+        .credit-table th {
+            text-align: left;
+            padding: 10px 12px;
+            background: #f8fafc;
+            color: #64748b;
+            font-weight: 500;
+            border-radius: 6px 6px 0 0;
+        }
+        .credit-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #334155;
+        }
+        .credit-table tr:last-child td {
+            border-bottom: none;
+        }
+        .credit-table .feature {
+            font-weight: 500;
+            color: #0f172a;
+        }
+        .credit-table .cost {
+            font-weight: 600;
+            color: #2563eb;
+            text-align: right;
+        }
+
+        /* Example calculation */
+        .example-box {
+            background: #eff6ff;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+        .example-box strong {
+            color: #1e40af;
+        }
+        .example-box p {
+            font-size: 13px;
+            color: #1e40af;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>V4: FAQ with Credit Details</h1>
+        <p class="description">Credit costs explained in FAQ section. Educational, answers common questions.</p>
+
+        <div class="faq-section">
+            <h2 class="faq-title">Frequently asked questions</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">What are credits and how do they work?</div>
+                <div class="faq-answer">
+                    Credits power the scanning features. Each feature costs a different amount based on data complexity. Credits refresh monthly on your billing date.
+
+                    <table class="credit-table">
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th style="text-align: right;">Cost</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="feature">Google Search Scanner</td>
+                                <td class="cost">60 credits/scan</td>
+                            </tr>
+                            <tr>
+                                <td class="feature">Backlinks Profile Scanner</td>
+                                <td class="cost">2 credits/domain</td>
+                            </tr>
+                            <tr>
+                                <td class="feature">Backlinks Monitoring</td>
+                                <td class="cost">1 credit/link</td>
+                            </tr>
+                            <tr>
+                                <td class="feature">Contact Data Extraction</td>
+                                <td class="cost">15 credits/domain</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="example-box">
+                        <p><strong>Example:</strong> With 5,000 Pro credits, you could run 50 Google Search scans + monitor 1,000 backlinks + extract 100 contact emails each month.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">How many Google Search scans can I run?</div>
+                <div class="faq-answer">
+                    Each Google Search scan costs 60 credits and analyzes up to 200 search results. With Free (120 credits) you get 2 scans/month. With Pro (5,000 credits) you get 83 scans/month. With Business (50,000 credits) you get 833 scans/month.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">What does Backlinks Profile Scanner do?</div>
+                <div class="faq-answer">
+                    It extracts refdomains (unique linking domains) for any website. This helps you analyze competitors' backlink profiles or research potential link sources. Each domain analyzed costs 2 credits.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">How does Backlinks Monitoring work?</div>
+                <div class="faq-answer">
+                    We crawl your backlinks to check if they're still live, follow/nofollow, and indexed. Each link checked costs 1 credit per crawl. If you monitor 100 links weekly, that's 400 credits/month.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">What is Contact Data Extraction?</div>
+                <div class="faq-answer">
+                    Our experimental feature finds email contacts for any domain. Useful for outreach when you've found a good link prospect. Each extraction costs 15 credits per domain.
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

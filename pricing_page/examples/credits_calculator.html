@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credits Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            padding: 40px 20px;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Calculator Card */
+        .calculator {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            padding: 32px;
+        }
+        .calculator-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .calculator-header h2 {
+            font-size: 24px;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+        .calculator-header p {
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        /* Plan Selector */
+        .plan-selector {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 32px;
+        }
+        .plan-btn {
+            padding: 10px 24px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #64748b;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .plan-btn:hover {
+            border-color: #cbd5e1;
+        }
+        .plan-btn.active {
+            border-color: #2563eb;
+            background: #eff6ff;
+            color: #2563eb;
+        }
+        .plan-btn .credits {
+            font-weight: 400;
+            font-size: 12px;
+            display: block;
+            margin-top: 2px;
+        }
+
+        /* Credits Budget Bar */
+        .budget-bar {
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 32px;
+        }
+        .budget-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .budget-label {
+            font-size: 14px;
+            color: #64748b;
+        }
+        .budget-numbers {
+            font-size: 14px;
+        }
+        .budget-used {
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .budget-total {
+            color: #64748b;
+        }
+        .budget-progress {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .budget-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #22c55e, #16a34a);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        .budget-fill.warning {
+            background: linear-gradient(90deg, #f59e0b, #d97706);
+        }
+        .budget-fill.danger {
+            background: linear-gradient(90deg, #ef4444, #dc2626);
+        }
+        .budget-remaining {
+            margin-top: 8px;
+            font-size: 13px;
+            color: #64748b;
+        }
+        .budget-remaining span {
+            font-weight: 600;
+            color: #22c55e;
+        }
+        .budget-remaining span.warning {
+            color: #f59e0b;
+        }
+        .budget-remaining span.danger {
+            color: #ef4444;
+        }
+
+        /* Sliders */
+        .sliders {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        .slider-item {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .slider-info h3 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 2px;
+        }
+        .slider-info p {
+            font-size: 13px;
+            color: #64748b;
+        }
+        .slider-value {
+            text-align: right;
+        }
+        .slider-value .amount {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .slider-value .unit {
+            font-size: 13px;
+            color: #64748b;
+        }
+        .slider-value .cost {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 2px;
+        }
+
+        /* Range Slider Styling */
+        .slider-track {
+            position: relative;
+            height: 8px;
+        }
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #2563eb;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+            transition: transform 0.15s;
+        }
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #2563eb;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Cost Legend */
+        .cost-legend {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid #e2e8f0;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #64748b;
+        }
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            background: #2563eb;
+            border-radius: 50%;
+        }
+        .legend-item strong {
+            color: #0f172a;
+        }
+
+        /* Recommendation */
+        .recommendation {
+            margin-top: 24px;
+            padding: 16px 20px;
+            background: #eff6ff;
+            border-radius: 10px;
+            border-left: 4px solid #2563eb;
+        }
+        .recommendation p {
+            font-size: 14px;
+            color: #1e40af;
+        }
+        .recommendation strong {
+            font-weight: 600;
+        }
+
+        @media (max-width: 640px) {
+            .plan-selector {
+                flex-direction: column;
+            }
+            .cost-legend {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="calculator">
+            <div class="calculator-header">
+                <h2>Credits Calculator</h2>
+                <p>Adjust sliders to see how credits work for your workflow</p>
+            </div>
+
+            <!-- Plan Selector -->
+            <div class="plan-selector">
+                <button class="plan-btn" data-plan="free" data-credits="120">
+                    Free
+                    <span class="credits">120 credits/mo</span>
+                </button>
+                <button class="plan-btn active" data-plan="pro" data-credits="5000">
+                    Pro
+                    <span class="credits">5,000 credits/mo</span>
+                </button>
+                <button class="plan-btn" data-plan="business" data-credits="50000">
+                    Business
+                    <span class="credits">50,000 credits/mo</span>
+                </button>
+            </div>
+
+            <!-- Budget Bar -->
+            <div class="budget-bar">
+                <div class="budget-header">
+                    <span class="budget-label">Monthly credit budget</span>
+                    <span class="budget-numbers">
+                        <span class="budget-used" id="budgetUsed">0</span>
+                        <span class="budget-total">/ <span id="budgetTotal">5,000</span></span>
+                    </span>
+                </div>
+                <div class="budget-progress">
+                    <div class="budget-fill" id="budgetFill" style="width: 0%"></div>
+                </div>
+                <div class="budget-remaining">
+                    <span id="budgetRemaining">5,000</span> credits remaining
+                </div>
+            </div>
+
+            <!-- Sliders -->
+            <div class="sliders">
+                <div class="slider-item">
+                    <div class="slider-header">
+                        <div class="slider-info">
+                            <h3>Google Search Scanner</h3>
+                            <p>Scans up to 200 Google results per scan</p>
+                        </div>
+                        <div class="slider-value">
+                            <div class="amount" id="googleValue">20</div>
+                            <div class="unit">scans/month</div>
+                            <div class="cost" id="googleCost">1,200 credits</div>
+                        </div>
+                    </div>
+                    <div class="slider-track">
+                        <input type="range" id="googleSlider" min="0" max="100" value="20" data-cost="60">
+                    </div>
+                </div>
+
+                <div class="slider-item">
+                    <div class="slider-header">
+                        <div class="slider-info">
+                            <h3>Backlinks Profile Scanner</h3>
+                            <p>Extract refdomains for any website</p>
+                        </div>
+                        <div class="slider-value">
+                            <div class="amount" id="backlinksValue">500</div>
+                            <div class="unit">domains/month</div>
+                            <div class="cost" id="backlinksCost">1,000 credits</div>
+                        </div>
+                    </div>
+                    <div class="slider-track">
+                        <input type="range" id="backlinksSlider" min="0" max="2000" value="500" data-cost="2">
+                    </div>
+                </div>
+
+                <div class="slider-item">
+                    <div class="slider-header">
+                        <div class="slider-info">
+                            <h3>Backlinks Monitoring</h3>
+                            <p>Check if your backlinks are still live</p>
+                        </div>
+                        <div class="slider-value">
+                            <div class="amount" id="monitoringValue">1000</div>
+                            <div class="unit">links/month</div>
+                            <div class="cost" id="monitoringCost">1,000 credits</div>
+                        </div>
+                    </div>
+                    <div class="slider-track">
+                        <input type="range" id="monitoringSlider" min="0" max="5000" value="1000" data-cost="1">
+                    </div>
+                </div>
+
+                <div class="slider-item">
+                    <div class="slider-header">
+                        <div class="slider-info">
+                            <h3>Contact Data Extraction</h3>
+                            <p>Find email contacts for outreach</p>
+                        </div>
+                        <div class="slider-value">
+                            <div class="amount" id="contactValue">50</div>
+                            <div class="unit">domains/month</div>
+                            <div class="cost" id="contactCost">750 credits</div>
+                        </div>
+                    </div>
+                    <div class="slider-track">
+                        <input type="range" id="contactSlider" min="0" max="500" value="50" data-cost="15">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cost Legend -->
+            <div class="cost-legend">
+                <div class="legend-item">
+                    <span class="legend-dot"></span>
+                    Google Search: <strong>60 credits</strong>/scan
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot"></span>
+                    Backlinks Profile: <strong>2 credits</strong>/domain
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot"></span>
+                    Backlinks Monitoring: <strong>1 credit</strong>/link
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot"></span>
+                    Contact Extraction: <strong>15 credits</strong>/domain
+                </div>
+            </div>
+
+            <!-- Recommendation -->
+            <div class="recommendation" id="recommendation">
+                <p>This usage fits comfortably within the <strong>Pro</strong> plan.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const plans = {
+            free: { credits: 120, name: 'Free' },
+            pro: { credits: 5000, name: 'Pro' },
+            business: { credits: 50000, name: 'Business' }
+        };
+
+        // Slider max values per plan
+        const sliderMaxByPlan = {
+            free: { google: 2, backlinks: 60, monitoring: 120, contact: 8 },
+            pro: { google: 100, backlinks: 2500, monitoring: 5000, contact: 333 },
+            business: { google: 1000, backlinks: 25000, monitoring: 50000, contact: 3333 }
+        };
+
+        let currentPlan = 'pro';
+        let totalCredits = plans[currentPlan].credits;
+
+        // Elements
+        const planBtns = document.querySelectorAll('.plan-btn');
+        const budgetUsed = document.getElementById('budgetUsed');
+        const budgetTotal = document.getElementById('budgetTotal');
+        const budgetFill = document.getElementById('budgetFill');
+        const budgetRemaining = document.getElementById('budgetRemaining');
+        const recommendation = document.getElementById('recommendation');
+
+        const sliders = {
+            google: {
+                slider: document.getElementById('googleSlider'),
+                value: document.getElementById('googleValue'),
+                cost: document.getElementById('googleCost'),
+                unitCost: 60
+            },
+            backlinks: {
+                slider: document.getElementById('backlinksSlider'),
+                value: document.getElementById('backlinksValue'),
+                cost: document.getElementById('backlinksCost'),
+                unitCost: 2
+            },
+            monitoring: {
+                slider: document.getElementById('monitoringSlider'),
+                value: document.getElementById('monitoringValue'),
+                cost: document.getElementById('monitoringCost'),
+                unitCost: 1
+            },
+            contact: {
+                slider: document.getElementById('contactSlider'),
+                value: document.getElementById('contactValue'),
+                cost: document.getElementById('contactCost'),
+                unitCost: 15
+            }
+        };
+
+        // Plan selection
+        planBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                planBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentPlan = btn.dataset.plan;
+                totalCredits = plans[currentPlan].credits;
+                budgetTotal.textContent = totalCredits.toLocaleString();
+
+                // Update slider max values
+                updateSliderMaxValues();
+
+                // Reset sliders to sensible defaults for the plan
+                resetSlidersForPlan();
+
+                updateBudget();
+            });
+        });
+
+        function updateSliderMaxValues() {
+            const maxValues = sliderMaxByPlan[currentPlan];
+            sliders.google.slider.max = maxValues.google;
+            sliders.backlinks.slider.max = maxValues.backlinks;
+            sliders.monitoring.slider.max = maxValues.monitoring;
+            sliders.contact.slider.max = maxValues.contact;
+        }
+
+        function resetSlidersForPlan() {
+            const maxValues = sliderMaxByPlan[currentPlan];
+            // Set defaults at ~25% of max for a balanced mix
+            sliders.google.slider.value = Math.round(maxValues.google * 0.25);
+            sliders.backlinks.slider.value = Math.round(maxValues.backlinks * 0.25);
+            sliders.monitoring.slider.value = Math.round(maxValues.monitoring * 0.25);
+            sliders.contact.slider.value = Math.round(maxValues.contact * 0.25);
+        }
+
+        // Slider updates
+        Object.keys(sliders).forEach(key => {
+            const s = sliders[key];
+            s.slider.addEventListener('input', () => {
+                updateBudget();
+            });
+        });
+
+        function updateBudget() {
+            let used = 0;
+
+            Object.keys(sliders).forEach(key => {
+                const s = sliders[key];
+                const value = parseInt(s.slider.value);
+                const cost = value * s.unitCost;
+
+                s.value.textContent = value.toLocaleString();
+                s.cost.textContent = cost.toLocaleString() + ' credits';
+
+                used += cost;
+            });
+
+            const percentage = Math.min((used / totalCredits) * 100, 100);
+            const remaining = totalCredits - used;
+
+            budgetUsed.textContent = used.toLocaleString();
+            budgetFill.style.width = percentage + '%';
+
+            // Color coding
+            budgetFill.classList.remove('warning', 'danger');
+            budgetRemaining.querySelector('span').classList.remove('warning', 'danger');
+
+            if (percentage > 100) {
+                budgetFill.classList.add('danger');
+                budgetRemaining.querySelector('span').classList.add('danger');
+                budgetRemaining.innerHTML = `<span class="danger">${Math.abs(remaining).toLocaleString()}</span> credits over budget`;
+            } else if (percentage > 80) {
+                budgetFill.classList.add('warning');
+                budgetRemaining.querySelector('span').classList.add('warning');
+                budgetRemaining.innerHTML = `<span class="warning">${remaining.toLocaleString()}</span> credits remaining`;
+            } else {
+                budgetRemaining.innerHTML = `<span>${remaining.toLocaleString()}</span> credits remaining`;
+            }
+
+            // Update recommendation
+            updateRecommendation(used);
+        }
+
+        function updateRecommendation(used) {
+            let recommendedPlan = 'Free';
+            if (used > 120) recommendedPlan = 'Pro';
+            if (used > 5000) recommendedPlan = 'Business';
+
+            if (used <= totalCredits) {
+                recommendation.innerHTML = `<p>This usage fits comfortably within the <strong>${plans[currentPlan].name}</strong> plan.</p>`;
+            } else {
+                recommendation.innerHTML = `<p>This usage exceeds <strong>${plans[currentPlan].name}</strong>. Consider upgrading to <strong>${recommendedPlan}</strong>.</p>`;
+            }
+        }
+
+        // Initialize
+        updateSliderMaxValues();
+        resetSlidersForPlan();
+        updateBudget();
+    </script>
+</body>
+</html>

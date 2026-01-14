@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FatGrid Pricing - V4 Outcome-Focused</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #ffffff;
+            line-height: 1.6;
+            color: #1a1a2e;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 56px;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: #e0e7ff;
+            color: #4338ca;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            color: #1a1a2e;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+        .hero h1 .highlight {
+            color: #4f46e5;
+        }
+        .hero .subtitle {
+            font-size: 20px;
+            color: #6b7280;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        /* Billing Toggle */
+        .billing-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .billing-toggle {
+            display: flex;
+            background: #f3f4f6;
+            border-radius: 12px;
+            padding: 4px;
+        }
+        .billing-option {
+            padding: 10px 24px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #6b7280;
+        }
+        .billing-option.active {
+            background: white;
+            color: #1a1a2e;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .save-note {
+            margin-top: 12px;
+            font-size: 13px;
+            color: #059669;
+            font-weight: 500;
+        }
+
+        /* Pricing Cards */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 64px;
+        }
+        .plan-card {
+            background: #fafafa;
+            border-radius: 20px;
+            padding: 32px;
+            position: relative;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .plan-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+        .plan-card.featured {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            transform: scale(1.02);
+        }
+        .plan-card.featured:hover {
+            transform: scale(1.02) translateY(-4px);
+        }
+        .featured-tag {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fbbf24;
+            color: #78350f;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 6px 16px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Plan Content */
+        .plan-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+        .plan-name {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .plan-description {
+            font-size: 14px;
+            opacity: 0.7;
+            margin-bottom: 24px;
+        }
+        .plan-card.featured .plan-description {
+            opacity: 0.85;
+        }
+
+        .plan-price {
+            margin-bottom: 24px;
+        }
+        .price-amount {
+            font-size: 56px;
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+        .price-period {
+            font-size: 16px;
+            opacity: 0.6;
+            font-weight: 400;
+        }
+        .price-note {
+            font-size: 13px;
+            opacity: 0.6;
+            margin-top: 4px;
+        }
+
+        /* CTA Buttons */
+        .plan-cta {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            margin-bottom: 32px;
+            transition: all 0.2s;
+        }
+        .cta-default {
+            background: #1a1a2e;
+            color: white;
+        }
+        .cta-default:hover {
+            background: #2d2d44;
+        }
+        .plan-card.featured .plan-cta {
+            background: white;
+            color: #4f46e5;
+        }
+        .plan-card.featured .plan-cta:hover {
+            background: #f0f0ff;
+        }
+
+        /* What You Get Section */
+        .outcomes-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+        .plan-card.featured .outcomes-title {
+            opacity: 0.7;
+        }
+        .outcome-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 14px;
+            font-size: 14px;
+        }
+        .outcome-icon {
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        .outcome-text strong {
+            font-weight: 600;
+        }
+
+        /* Divider */
+        .divider {
+            height: 1px;
+            background: currentColor;
+            opacity: 0.1;
+            margin: 24px 0;
+        }
+
+        /* Limits List */
+        .limits-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 16px;
+            font-size: 13px;
+            opacity: 0.7;
+        }
+        .plan-card.featured .limits-grid {
+            opacity: 0.8;
+        }
+        .limit-item {
+            display: flex;
+            justify-content: space-between;
+        }
+        .limit-item span:last-child {
+            font-weight: 600;
+        }
+
+        /* Social Proof */
+        .social-proof {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+        .proof-title {
+            font-size: 14px;
+            color: #9ca3af;
+            margin-bottom: 24px;
+        }
+        .proof-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 48px;
+            flex-wrap: wrap;
+            opacity: 0.4;
+        }
+        .proof-logos span {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+        .proof-stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            margin-top: 32px;
+        }
+        .stat {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            color: #4f46e5;
+        }
+        .stat-label {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        /* Guarantees */
+        .guarantees {
+            background: #f9fafb;
+            border-radius: 16px;
+            padding: 32px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            text-align: center;
+        }
+        .guarantee {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .guarantee-icon {
+            font-size: 28px;
+        }
+        .guarantee-text {
+            font-size: 14px;
+            color: #4b5563;
+            font-weight: 500;
+        }
+
+        /* Design Notes */
+        .design-notes {
+            background: #fdf4ff;
+            border: 1px solid #d946ef;
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 64px;
+        }
+        .design-notes h3 {
+            color: #86198f;
+            margin-bottom: 16px;
+            font-size: 18px;
+        }
+        .design-notes ul {
+            margin-left: 20px;
+            color: #701a75;
+        }
+        .design-notes li {
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 900px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .plan-card.featured {
+                transform: none;
+            }
+            .guarantees {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .proof-stats {
+                gap: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero -->
+        <div class="hero">
+            <span class="hero-badge">Trusted by 1,200+ link builders</span>
+            <h1>Pay less for <span class="highlight">better links</span></h1>
+            <p class="subtitle">Compare prices from 300k+ publishers. Find link opportunities competitors miss. Stop overpaying for backlinks.</p>
+        </div>
+
+        <!-- Billing Toggle -->
+        <div class="billing-section">
+            <div class="billing-toggle">
+                <div class="billing-option">Pay Monthly</div>
+                <div class="billing-option active">Pay Annually</div>
+            </div>
+            <div class="save-note">✨ Save 20% with annual billing</div>
+        </div>
+
+        <!-- Pricing Cards -->
+        <div class="pricing-grid">
+            <!-- Free -->
+            <div class="plan-card">
+                <div class="plan-icon">🔍</div>
+                <div class="plan-name">Explorer</div>
+                <div class="plan-description">See what FatGrid can do</div>
+
+                <div class="plan-price">
+                    <span class="price-amount">$0</span>
+                    <div class="price-note">Free forever</div>
+                </div>
+
+                <a href="#" class="plan-cta cta-default">Start exploring</a>
+
+                <div class="outcomes-title">What you'll achieve</div>
+                <div class="outcome-item">
+                    <span class="outcome-icon">💰</span>
+                    <span class="outcome-text"><strong>Check if you're overpaying</strong> for any 200 domains</span>
+                </div>
+                <div class="outcome-item">
+                    <span class="outcome-icon">🔎</span>
+                    <span class="outcome-text"><strong>Discover link sellers</strong> on any website</span>
+                </div>
+                <div class="outcome-item">
+                    <span class="outcome-icon">📊</span>
+                    <span class="outcome-text"><strong>Preview the marketplace</strong> (domains hidden)</span>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="limits-grid">
+                    <div class="limit-item"><span>Credits</span><span>120/mo</span></div>
+                    <div class="limit-item"><span>Projects</span><span>1</span></div>
+                    <div class="limit-item"><span>Publishers</span><span>100</span></div>
+                    <div class="limit-item"><span>Export</span><span>100 rows</span></div>
+                </div>
+            </div>
+
+            <!-- Standard - Featured -->
+            <div class="plan-card featured">
+                <span class="featured-tag">Best Value</span>
+                <div class="plan-icon">⚡</div>
+                <div class="plan-name">Professional</div>
+                <div class="plan-description">For serious link builders</div>
+
+                <div class="plan-price">
+                    <span class="price-amount">$23</span>
+                    <span class="price-period">/mo</span>
+                    <div class="price-note">$276/year (save $72)</div>
+                </div>
+
+                <a href="#" class="plan-cta">Start 7-day free trial</a>
+
+                <div class="outcomes-title">What you'll achieve</div>
+                <div class="outcome-item">
+                    <span class="outcome-icon">🎯</span>
+                    <span class="outcome-text"><strong>Never overpay again</strong> — check 1,000 domains instantly</span>
+                </div>
+                <div class="outcome-item">
+                    <span class="outcome-icon">🌐</span>
+                    <span class="outcome-text"><strong>See every publisher name</strong> in the marketplace</span>
+                </div>
+                <div class="outcome-item">
+                    <span class="outcome-icon">📈</span>
+                    <span class="outcome-text"><strong>Find hidden opportunities</strong> competitors miss</span>
+                </div>
+                <div class="outcome-item">
+                    <span class="outcome-icon">✅</span>
+                    <span class="outcome-text"><strong>Verify links are live</strong> with Check My Backlinks</span>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="limits-grid">
+                    <div class="limit-item"><span>Credits</span><span>5,000/mo</span></div>
+                    <div class="limit-item"><span>Projects</span><span>3</span></div>
+                    <div class="limit-item"><span>Publishers</span><span>3,000</span></div>
+                    <div class="limit-item"><span>Export</span><span>Unlimited</span></div>
+                </div>
+            </div>
+
+            <!-- Business -->
+            <div class="plan-card">
+                <div class="plan-icon">🏢</div>
+                <div class="plan-name">Agency</div>
+                <div class="plan-description">For teams & high volume</div>
+
+                <div class="plan-price">
+                    <span class="price-amount">$127</span>
+                    <span class="price-period">/mo</span>
+                    <div class="price-note">$1,524/year (save $384)</div>
+                </div>
+
+                <a href="#" class="plan-cta cta-default">Start 7-day free trial</a>
+
+                <div class="outcomes-title">What you'll achieve</div>
+                <div class="outcome-item">
+                    <span class="outcome-icon">🚀</span>
+                    <span class="outcome-text"><strong>Scale client campaigns</strong> across 15 projects</span>
+                </div>
+                <div class="outcome-item">
+                    <span class="outcome-icon">🔗</span>
+                    <span class="outcome-text"><strong>Check 5,000 domains</strong> per price check</span>
+                </div>
+                <div class="outcome-item">
+                    <span class="outcome-icon">⚙️</span>
+                    <span class="outcome-text"><strong>Automate with API</strong> access</span>
+                </div>
+                <div class="outcome-item">
+                    <span class="outcome-icon">💎</span>
+                    <span class="outcome-text"><strong>Priority support</strong> when you need it</span>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="limits-grid">
+                    <div class="limit-item"><span>Credits</span><span>50,000/mo</span></div>
+                    <div class="limit-item"><span>Projects</span><span>15</span></div>
+                    <div class="limit-item"><span>Publishers</span><span>15,000</span></div>
+                    <div class="limit-item"><span>Export</span><span>Unlimited</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Proof -->
+        <div class="social-proof">
+            <div class="proof-stats">
+                <div class="stat">
+                    <div class="stat-number">300k+</div>
+                    <div class="stat-label">Publishers indexed</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">15</div>
+                    <div class="stat-label">Marketplaces</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Countries</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">$2M+</div>
+                    <div class="stat-label">Saved by users</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Guarantees -->
+        <div class="guarantees">
+            <div class="guarantee">
+                <span class="guarantee-icon">🛡️</span>
+                <span class="guarantee-text">7-day money back</span>
+            </div>
+            <div class="guarantee">
+                <span class="guarantee-icon">🔄</span>
+                <span class="guarantee-text">Cancel anytime</span>
+            </div>
+            <div class="guarantee">
+                <span class="guarantee-icon">🔒</span>
+                <span class="guarantee-text">Secure with Stripe</span>
+            </div>
+            <div class="guarantee">
+                <span class="guarantee-icon">📞</span>
+                <span class="guarantee-text">Real human support</span>
+            </div>
+        </div>
+
+        <!-- Design Notes -->
+        <div class="design-notes">
+            <h3>🎯 V4: Outcome-Focused Design</h3>
+            <ul>
+                <li><strong>Benefit headlines</strong> - "Pay less for better links" focuses on what users get, not what the tool does</li>
+                <li><strong>Outcome-oriented features</strong> - "Never overpay again" instead of "1,000 domains per check"</li>
+                <li><strong>Renamed tiers for personas</strong> - "Explorer", "Professional", "Agency" instead of "Free", "Standard", "Business"</li>
+                <li><strong>Emotional icons</strong> - Emojis add personality and make scanning easier</li>
+                <li><strong>Gradient featured card</strong> - Strong visual hierarchy pulls attention to recommended plan</li>
+                <li><strong>Compressed limits</strong> - Technical details pushed to footer of each card</li>
+                <li><strong>Social proof stat</strong> - "$2M+ saved by users" creates concrete value perception</li>
+                <li><strong>Trust icons</strong> - Visual guarantees feel more reassuring than text</li>
+            </ul>
+            <p style="margin-top: 16px; font-weight: 600;">Best for: First-time visitors who need to understand value quickly</p>
+        </div>
+    </div>
+</body>
+</html>

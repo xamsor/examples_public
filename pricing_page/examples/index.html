@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FatGrid Pricing - Design Comparison</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f172a;
+            color: white;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        .subtitle {
+            color: #94a3b8;
+            margin-bottom: 40px;
+        }
+
+        .versions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .version-card {
+            background: #1e293b;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .version-card:hover {
+            transform: translateY(-4px);
+        }
+        .version-card a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .version-preview {
+            height: 300px;
+            background: #f1f5f9;
+            overflow: hidden;
+            position: relative;
+        }
+        .version-preview iframe {
+            width: 200%;
+            height: 200%;
+            border: none;
+            transform: scale(0.5);
+            transform-origin: top left;
+            pointer-events: none;
+        }
+        .version-preview::after {
+            content: 'Click to view full page →';
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+        }
+
+        .version-info {
+            padding: 20px;
+        }
+        .version-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .version-description {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .version-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .tag {
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+        .tag.green { background: #166534; color: #bbf7d0; }
+        .tag.red { background: #991b1b; color: #fecaca; }
+        .tag.blue { background: #1e40af; color: #bfdbfe; }
+        .tag.yellow { background: #854d0e; color: #fef08a; }
+        .tag.purple { background: #6b21a8; color: #e9d5ff; }
+
+        /* Summary table */
+        .summary {
+            margin-top: 48px;
+            background: #1e293b;
+            border-radius: 16px;
+            padding: 32px;
+        }
+        .summary h2 {
+            font-size: 20px;
+            margin-bottom: 24px;
+        }
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .summary-table th,
+        .summary-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #334155;
+        }
+        .summary-table th {
+            font-weight: 600;
+            color: #94a3b8;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+        .summary-table td {
+            font-size: 14px;
+        }
+        .summary-table tr:last-child td {
+            border-bottom: none;
+        }
+        .check { color: #22c55e; }
+        .cross { color: #ef4444; }
+
+        /* Best practices */
+        .best-practices {
+            margin-top: 48px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #4c1d95 100%);
+            border-radius: 16px;
+            padding: 32px;
+        }
+        .best-practices h2 {
+            margin-bottom: 24px;
+        }
+        .practice-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .practice {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .practice h3 {
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        .practice p {
+            font-size: 13px;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .versions-grid {
+                grid-template-columns: 1fr;
+            }
+            .practice-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>FatGrid Pricing Page — Design Options</h1>
+        <p class="subtitle">Click any card to view the full design. Each takes a different approach to value communication.</p>
+
+        <div class="versions-grid">
+            <!-- V1 -->
+            <div class="version-card">
+                <a href="v1_current_style.html" target="_blank">
+                    <div class="version-preview">
+                        <iframe src="v1_current_style.html" title="V1 Preview"></iframe>
+                    </div>
+                    <div class="version-info">
+                        <div class="version-title">V1: Current Style (Baseline)</div>
+                        <div class="version-description">
+                            Recreation of the current FatGrid pricing page. Feature-focused layout with three columns. Good starting point to understand what needs improvement.
+                        </div>
+                        <div class="version-tags">
+                            <span class="tag red">No value prop</span>
+                            <span class="tag red">No social proof</span>
+                            <span class="tag red">Confusing terms</span>
+                            <span class="tag yellow">Feature list</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- V2 -->
+            <div class="version-card">
+                <a href="v2_value_focused.html" target="_blank">
+                    <div class="version-preview">
+                        <iframe src="v2_value_focused.html" title="V2 Preview"></iframe>
+                    </div>
+                    <div class="version-info">
+                        <div class="version-title">V2: Value-Focused Cards</div>
+                        <div class="version-description">
+                            Strong headline, social proof bar, annual billing toggle, highlighted "Most Popular" plan, and progressive feature lists. Clean, modern SaaS style.
+                        </div>
+                        <div class="version-tags">
+                            <span class="tag green">Value headline</span>
+                            <span class="tag green">Social proof</span>
+                            <span class="tag green">Annual toggle</span>
+                            <span class="tag blue">FAQ section</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- V3 - Enhanced -->
+            <div class="version-card">
+                <a href="v3_comparison_table.html" target="_blank">
+                    <div class="version-preview">
+                        <iframe src="v3_comparison_table.html" title="V3 Preview"></iframe>
+                    </div>
+                    <div class="version-info">
+                        <div class="version-title">V3: Comparison Table (Enhanced)</div>
+                        <div class="version-description">
+                            Full comparison table + best elements from V2 & V4: billing toggle (15% annual), persona naming (Explorer/Professional/Agency), and FAQ section.
+                        </div>
+                        <div class="version-tags">
+                            <span class="tag green">Full comparison</span>
+                            <span class="tag green">Annual toggle</span>
+                            <span class="tag green">Persona tiers</span>
+                            <span class="tag blue">FAQ section</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- V4 -->
+            <div class="version-card">
+                <a href="v4_outcome_focused.html" target="_blank">
+                    <div class="version-preview">
+                        <iframe src="v4_outcome_focused.html" title="V4 Preview"></iframe>
+                    </div>
+                    <div class="version-info">
+                        <div class="version-title">V4: Outcome-Focused</div>
+                        <div class="version-description">
+                            Benefits over features. "What you'll achieve" instead of feature lists. Renamed tiers for personas (Explorer, Professional, Agency). Emotional design with icons.
+                        </div>
+                        <div class="version-tags">
+                            <span class="tag green">Benefit-led</span>
+                            <span class="tag green">Persona tiers</span>
+                            <span class="tag purple">Emotional</span>
+                            <span class="tag blue">Modern style</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- V5 - Hybrid -->
+            <div class="version-card">
+                <a href="v5_hybrid.html" target="_blank">
+                    <div class="version-preview">
+                        <iframe src="v5_hybrid.html" title="V5 Preview"></iframe>
+                    </div>
+                    <div class="version-info">
+                        <div class="version-title">V5: Hybrid (Cards + Table)</div>
+                        <div class="version-description">
+                            Best of both worlds: clean pricing cards for quick decisions, plus detailed comparison table below for careful buyers. Progressive disclosure pattern.
+                        </div>
+                        <div class="version-tags">
+                            <span class="tag green">Quick decision</span>
+                            <span class="tag green">Full comparison</span>
+                            <span class="tag green">Progressive disclosure</span>
+                            <span class="tag blue">FAQ section</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Comparison table -->
+        <div class="summary">
+            <h2>Feature Comparison</h2>
+            <table class="summary-table">
+                <thead>
+                    <tr>
+                        <th>Element</th>
+                        <th>V1 Current</th>
+                        <th>V2 Value</th>
+                        <th>V3 Table</th>
+                        <th>V4 Outcome</th>
+                        <th>V5 Hybrid</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Value proposition headline</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Social proof (numbers)</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Annual/monthly toggle</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Highlighted recommended plan</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Free trial CTA</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Pricing cards (quick view)</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Feature comparison table</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>FAQ section</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Benefit-focused copy</td>
+                        <td><span class="cross">✗</span></td>
+                        <td>Partial</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td>Partial</td>
+                    </tr>
+                    <tr>
+                        <td>Persona targeting</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Mobile responsive</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Best practices -->
+        <div class="best-practices">
+            <h2>2025-2026 Pricing Page Best Practices</h2>
+            <div class="practice-grid">
+                <div class="practice">
+                    <h3>🎯 Clarity Over Cleverness</h3>
+                    <p>Design for decisions, not decoration. Users should understand pricing within 5 seconds. Use clear headlines and visual hierarchy.</p>
+                </div>
+                <div class="practice">
+                    <h3>📊 3-4 Tiers Maximum</h3>
+                    <p>More tiers cause analysis paralysis. Highlight one "recommended" plan with visual prominence to guide choice.</p>
+                </div>
+                <div class="practice">
+                    <h3>💰 Annual Toggle + Savings</h3>
+                    <p>Show monthly and annual pricing with clear savings. 20% discount is standard. Display both percentage and dollar amount saved.</p>
+                </div>
+                <div class="practice">
+                    <h3>🛡️ Risk Reversal</h3>
+                    <p>Free trials, money-back guarantees, or "cancel anytime" reduce purchase friction significantly. Make these prominent.</p>
+                </div>
+                <div class="practice">
+                    <h3>👥 Social Proof</h3>
+                    <p>User counts, customer logos, testimonials, and impact metrics build credibility. Numbers feel more concrete than claims.</p>
+                </div>
+                <div class="practice">
+                    <h3>❓ Address Objections</h3>
+                    <p>FAQ sections answer common concerns. Tooltips explain confusing terms. Proactively remove friction points.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

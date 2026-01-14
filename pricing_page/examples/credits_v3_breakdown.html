@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credits Display - V3: Separate Breakdown Section</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            padding: 40px 20px;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 24px;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+        .description {
+            color: #64748b;
+            margin-bottom: 32px;
+            font-size: 14px;
+        }
+
+        /* Credits Breakdown Card */
+        .credits-breakdown {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+            padding: 32px;
+            margin-bottom: 32px;
+        }
+        .credits-breakdown h2 {
+            font-size: 18px;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+        .credits-breakdown .subtitle {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 24px;
+        }
+
+        .credit-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        .credit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px;
+            background: #f8fafc;
+            border-radius: 12px;
+        }
+        .credit-icon {
+            width: 40px;
+            height: 40px;
+            background: #dbeafe;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .credit-icon svg {
+            width: 20px;
+            height: 20px;
+            color: #2563eb;
+        }
+        .credit-info h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 2px;
+        }
+        .credit-info p {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 6px;
+        }
+        .credit-cost-tag {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Plan comparison mini */
+        .plan-usage {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #e2e8f0;
+        }
+        .plan-usage h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 16px;
+        }
+        .usage-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        .usage-table th {
+            text-align: left;
+            padding: 10px 12px;
+            background: #f1f5f9;
+            color: #64748b;
+            font-weight: 500;
+        }
+        .usage-table th:not(:first-child) {
+            text-align: center;
+        }
+        .usage-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #334155;
+        }
+        .usage-table td:not(:first-child) {
+            text-align: center;
+        }
+        .usage-table td:first-child {
+            font-weight: 500;
+            color: #0f172a;
+        }
+        .usage-table .highlight {
+            font-weight: 600;
+            color: #2563eb;
+        }
+
+        @media (max-width: 640px) {
+            .credit-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>V3: Separate Credits Breakdown</h1>
+        <p class="description">Dedicated section explaining credit costs. Clear, educational, placed before or after pricing table.</p>
+
+        <div class="credits-breakdown">
+            <h2>How credits work</h2>
+            <p class="subtitle">Credits power the scanning features. Each feature has a different cost based on data complexity.</p>
+
+            <div class="credit-grid">
+                <div class="credit-item">
+                    <div class="credit-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                    <div class="credit-info">
+                        <h3>Google Search Scanner</h3>
+                        <p>Scans up to 200 Google search results</p>
+                        <span class="credit-cost-tag">60 credits per scan</span>
+                    </div>
+                </div>
+
+                <div class="credit-item">
+                    <div class="credit-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                    </div>
+                    <div class="credit-info">
+                        <h3>Backlinks Profile Scanner</h3>
+                        <p>Extracts refdomains for any website</p>
+                        <span class="credit-cost-tag">2 credits per domain</span>
+                    </div>
+                </div>
+
+                <div class="credit-item">
+                    <div class="credit-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div class="credit-info">
+                        <h3>Backlinks Monitoring</h3>
+                        <p>Checks if your backlinks are still live</p>
+                        <span class="credit-cost-tag">1 credit per link</span>
+                    </div>
+                </div>
+
+                <div class="credit-item">
+                    <div class="credit-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <div class="credit-info">
+                        <h3>Contact Data Extraction</h3>
+                        <p>Finds email contacts for any domain</p>
+                        <span class="credit-cost-tag">15 credits per domain</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="plan-usage">
+                <h3>What you can do with each plan</h3>
+                <table class="usage-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Free (120)</th>
+                            <th>Pro (5,000)</th>
+                            <th>Business (50,000)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Google Search scans</td>
+                            <td>2</td>
+                            <td class="highlight">83</td>
+                            <td class="highlight">833</td>
+                        </tr>
+                        <tr>
+                            <td>Backlinks profiles</td>
+                            <td>60</td>
+                            <td class="highlight">2,500</td>
+                            <td class="highlight">25,000</td>
+                        </tr>
+                        <tr>
+                            <td>Links monitored</td>
+                            <td>120</td>
+                            <td class="highlight">5,000</td>
+                            <td class="highlight">50,000</td>
+                        </tr>
+                        <tr>
+                            <td>Contact extractions</td>
+                            <td>8</td>
+                            <td class="highlight">333</td>
+                            <td class="highlight">3,333</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
